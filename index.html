@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>web game gacha!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            font-family:'Segoe UI',sans-serif;
+            background-color: #ffffff; 
+            color: #000;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            padding:20px;
+        }
+        .container{
+            background:rgba(255,255,255,0.12);
+            backdrop-filter:blur(15px);
+            border-radius:25px;
+            padding:35px;
+            max-width:950px;
+            width:100%;
+            box-shadow:0 25px 70px rgba(0,0,0,0.7);
+            text-align:center;
+        }
+        h1{
+            font-size:3.5em;
+            background:linear-gradient(90deg,#ff00c8,#ffd000,#00ff9d,#ff00c8);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            margin-bottom:10px;
+            animation:glow 3s infinite alternate;
+        }
+        @keyframes glow{from{text-shadow:0 0 20px #fff}to{text-shadow:0 0 40px #0ff}}
+        
+        /* Styling cho thanh thông tin SMC/Vòng/Skin */
+        .economy-bar{
+            background: #1e88e5; 
+            color: #fff;
+            padding:18px;
+            border-radius:15px;
+            font-size:1.5em;
+            display:flex;
+            justify-content:space-around;
+            flex-wrap:wrap;
+            gap:15px;
+            margin:20px 0;
+        }
+
+        /* * ĐÃ SỬA LỖI LỚN NHẤT: BỎ background, color, box-shadow CÓ !important.
+         * Giờ đây, màu sắc sẽ do class skin (ví dụ: .skin-darkmatter-1) quyết định.
+         */
+        #current-skin-display{
+            height:120px;
+            line-height:120px;
+            font-size:2.5em;
+            font-weight:bold;
+            margin:25px 0;
+            border-radius:18px;
+            transition:all .5s;
+            
+            /* Đặt màu mặc định nhẹ nhàng, không dùng !important */
+            background: #f0f0f0; 
+            color: #333;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-group{
+            display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:30px 0;
+        }
+        button{
+            padding:18px 40px;
+            font-size:1.4em;
+            font-weight:bold;
+            border:none;
+            border-radius:15px;
+            cursor:pointer;
+            transition:all .3s;
+            box-shadow:0 8px 15px rgba(0,0,0,0.4);
+        }
+        #gacha-x1{background:#ff2d55;color:#fff}
+        #gacha-x10{background:#ff9500;color:#fff;font-size:1.6em;padding:22px 50px}
+        .action-button{background:#007aff;color:#fff}
+        .buy-btn{background:#4caf50;color:#fff}
+        .disabled-btn{background:#666;cursor:not-allowed;opacity:0.6}
+        button:hover:not(.disabled-btn){transform:translateY(-6px);box-shadow:0 12px 20px rgba(0,0,0,0.5)}
+        button:active:not(.disabled-btn){transform:translateY(4px)}
+        .results{
+            margin:30px 0;
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+            gap:15px;
+        }
+        /* Sửa lỗi hiển thị chung */
+        .result-item {
+            padding: 16px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+            animation: pop 0.6s forwards;
+            border: 1px solid rgba(0, 0, 0, 0.1); 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+        }
+
+        /* ------------------------------------------------------------------- */
+        /* TIER 1: COMMON (C) - 72 SKINS - BẢNG MÀU QUANG PHỔ (CẬP NHẬT LẦN 2) */
+        /* ------------------------------------------------------------------- */
+        /* Áp dụng style chung cho toàn bộ skin C */
+        [class^="skin-common-"], [class*=" skin-common-"] {
+            color: #fff; /* Mặc định chữ trắng */
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            box-shadow: none;
+        }
+
+        /* Các màu sáng dùng chữ đen để dễ đọc */
+        .skin-common-1, .skin-common-2, .skin-common-3, .skin-common-4,
+        .skin-common-11, .skin-common-12, .skin-common-13,
+        .skin-common-21, .skin-common-22, .skin-common-23, .skin-common-24,
+        .skin-common-31, .skin-common-32, .skin-common-33, .skin-common-34,
+        .skin-common-41, .skin-common-42, .skin-common-43, .skin-common-44,
+        .skin-common-71 {
+            color: #333;
+        }
+
+        /* 1. ĐỎ (Red) - C1 đến C10 (Đã sửa mức tối: dừng ở #400000 thay vì #150000) */
+.skin-common-1 { background: #ff0000; }
+.skin-common-2 { background: #e00000; }
+.skin-common-3 { background: #c00000; }
+.skin-common-4 { background: #a00000; }
+.skin-common-5 { background: #800000; }
+.skin-common-6 { background: #600000; }
+.skin-common-7 { background: #500000; }
+.skin-common-8 { background: #400000; } /* Tối nhất */
+.skin-common-9 { background: #350000; }
+.skin-common-10 { background: #300000; }
+
+/* 2. CAM (Orange) - C11 đến C20 (Đã sửa mức tối: dừng ở #402400 thay vì #150800) */
+.skin-common-11 { background: #ffa500; }
+.skin-common-12 { background: #e09000; }
+.skin-common-13 { background: #c07800; }
+.skin-common-14 { background: #a06000; }
+.skin-common-15 { background: #804800; }
+.skin-common-16 { background: #603600; }
+.skin-common-17 { background: #502c00; }
+.skin-common-18 { background: #402400; } /* Tối nhất */
+.skin-common-19 { background: #351e00; }
+.skin-common-20 { background: #301a00; }
+
+/* 3. VÀNG (Yellow) - C21 đến C30 (Đã sửa mức tối: dừng ở #404000 thay vì #151500) */
+.skin-common-21 { background: #ffff00; }
+.skin-common-22 { background: #e0e000; }
+.skin-common-23 { background: #c0c000; }
+.skin-common-24 { background: #a0a000; }
+.skin-common-25 { background: #808000; }
+.skin-common-26 { background: #606000; }
+.skin-common-27 { background: #505000; }
+.skin-common-28 { background: #404000; } /* Tối nhất */
+.skin-common-29 { background: #353500; }
+.skin-common-30 { background: #303000; }
+
+/* 4. LỤC (Green) - C31 đến C40 (Đã sửa mức tối: dừng ở #004000 thay vì #001500) */
+.skin-common-31 { background: #00ff00; }
+.skin-common-32 { background: #00e000; }
+.skin-common-33 { background: #00c000; }
+.skin-common-34 { background: #00a000; }
+.skin-common-35 { background: #008000; }
+.skin-common-36 { background: #006000; }
+.skin-common-37 { background: #005000; }
+.skin-common-38 { background: #004000; } /* Tối nhất */
+.skin-common-39 { background: #003500; }
+.skin-common-40 { background: #003000; }
+
+/* 5. LAM (Cyan/Light Blue) - C41 đến C50 (Đã sửa mức tối: dừng ở #004040 thay vì #001515) */
+.skin-common-41 { background: #00ffff; }
+.skin-common-42 { background: #00e0e0; }
+.skin-common-43 { background: #00c0c0; }
+.skin-common-44 { background: #00a0a0; }
+.skin-common-45 { background: #008080; }
+.skin-common-46 { background: #006060; }
+.skin-common-47 { background: #005050; }
+.skin-common-48 { background: #004040; } /* Tối nhất */
+.skin-common-49 { background: #003535; }
+.skin-common-50 { background: #003030; }
+
+/* 6. CHÀM (Indigo/Dark Blue) - C51 đến C60 (Đã sửa mức tối: dừng ở #2a005b thay vì #05000c) */
+.skin-common-51 { background: #6a00ff; }
+.skin-common-52 { background: #5a00d6; }
+.skin-common-53 { background: #4a00ad; }
+.skin-common-54 { background: #3a0084; }
+.skin-common-55 { background: #30006a; }
+.skin-common-56 { background: #2a005b; } /* Tối nhất */
+.skin-common-57 { background: #250050; }
+.skin-common-58 { background: #200045; }
+.skin-common-59 { background: #1b003c; }
+.skin-common-60 { background: #160030; }
+
+/* 7. TÍM (Violet) - C61 đến C70 (Đã sửa mức tối: dừng ở #50005b thay vì #09000c) */
+.skin-common-61 { background: #d400ff; }
+.skin-common-62 { background: #b300d6; }
+.skin-common-63 { background: #9200ad; }
+.skin-common-64 { background: #710084; }
+.skin-common-65 { background: #60006e; }
+.skin-common-66 { background: #50005b; } /* Tối nhất */
+.skin-common-67 { background: #40004a; }
+.skin-common-68 { background: #300039; }
+.skin-common-69 { background: #200028; }
+.skin-common-70 { background: #100017; }
+
+/* 8. HAI SKIN CUỐI: TRẮNG và ĐEN (Vẫn giữ nguyên) */
+.skin-common-71 { 
+    background: #ffffff; 
+    border: 2px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.skin-common-72 { 
+    background: #000000; 
+    border: 2px solid #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+        /* ------------------------------------------------------------------- */
+        /* TIER 2: METAL (M) - 36 SKINS - MÀU KIM LOẠI ĐA DẠNG & ĐỘ ĐẬM */
+        /* ------------------------------------------------------------------- */
+        /* Xám Kim loại (Sáng -> Đậm) - 9 cặp */
+        .skin-metal-1 { background: linear-gradient(145deg, #f0f0f0, #b0b0b0); }
+        .skin-metal-2 { background: linear-gradient(145deg, #e0e0e0, #a0a0a0); }
+        .skin-metal-3 { background: linear-gradient(145deg, #d0d0d0, #909090); }
+        .skin-metal-4 { background: linear-gradient(145deg, #c0c0c0, #808080); }
+        .skin-metal-5 { background: linear-gradient(145deg, #b0b0b0, #707070); }
+        .skin-metal-6 { background: linear-gradient(145deg, #a0a0a0, #606060); }
+        .skin-metal-7 { background: linear-gradient(145deg, #909090, #505050); }
+        .skin-metal-8 { background: linear-gradient(145deg, #808080, #404040); }
+        .skin-metal-9 { background: linear-gradient(145deg, #707070, #303030); }
+
+        /* Đồng Đỏ (Sáng -> Đậm) - 9 cặp */
+        .skin-metal-10 { background: linear-gradient(145deg, #ffc896, #e6a152); }
+        .skin-metal-11 { background: linear-gradient(145deg, #f0b482, #d39246); }
+        .skin-metal-12 { background: linear-gradient(145deg, #e0a06e, #c0833a); }
+        .skin-metal-13 { background: linear-gradient(145deg, #d08c5a, #ad7430); }
+        .skin-metal-14 { background: linear-gradient(145deg, #c07846, #9a6526); }
+        .skin-metal-15 { background: linear-gradient(145deg, #b06432, #87561c); }
+        .skin-metal-16 { background: linear-gradient(145deg, #a0501e, #744712); }
+        .skin-metal-17 { background: linear-gradient(145deg, #903c0a, #61380a); }
+        .skin-metal-18 { background: linear-gradient(145deg, #802800, #4e2900); }
+
+        /* Thép Xanh (Sáng -> Đậm) - 9 cặp */
+        .skin-metal-19 { background: linear-gradient(145deg, #a9d6ff, #78b4e8); }
+        .skin-metal-20 { background: linear-gradient(145deg, #95c2f0, #69a0d2); }
+        .skin-metal-21 { background: linear-gradient(145deg, #81aee0, #5a8cbc); }
+        .skin-metal-22 { background: linear-gradient(145deg, #6d9ad0, #4b78a6); }
+        .skin-metal-23 { background: linear-gradient(145deg, #5986c0, #3c6490); }
+        .skin-metal-24 { background: linear-gradient(145deg, #4572b0, #2d507a); }
+        .skin-metal-25 { background: linear-gradient(145deg, #315ea0, #1e3c64); }
+        .skin-metal-26 { background: linear-gradient(145deg, #1d4a90, #0f284e); }
+        .skin-metal-27 { background: linear-gradient(145deg, #093680, #001438); }
+
+        /* Kim loại Vàng (Sáng -> Đậm) - 9 cặp */
+        .skin-metal-28 { background: linear-gradient(145deg, #fffacd, #e6d8a3); }
+        .skin-metal-29 { background: linear-gradient(145deg, #f0e8b8, #d6c895); }
+        .skin-metal-30 { background: linear-gradient(145deg, #e0d6a3, #c6b887); }
+        .skin-metal-31 { background: linear-gradient(145deg, #d0c48e, #b6a879); }
+        .skin-metal-32 { background: linear-gradient(145deg, #c0b279, #a6986b); }
+        .skin-metal-33 { background: linear-gradient(145deg, #b0a064, #96885d); }
+        .skin-metal-34 { background: linear-gradient(145deg, #a08e4f, #86784f); }
+        .skin-metal-35 { background: linear-gradient(145deg, #907c3a, #766841); }
+        .skin-metal-36 { background: linear-gradient(145deg, #806a25, #665833); }
+
+        /* Style chung cho tất cả skin Metal */
+        [class^="skin-metal-"], [class*=" skin-metal-"] {
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Các skin Metal sáng dùng chữ đen */
+        .skin-metal-1, .skin-metal-2, .skin-metal-3, .skin-metal-4,
+        .skin-metal-5, .skin-metal-10, .skin-metal-11, .skin-metal-12,
+        .skin-metal-19, .skin-metal-20, .skin-metal-21, .skin-metal-28,
+        .skin-metal-29, .skin-metal-30 {
+            color: #333;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Các skin Metal tối dùng chữ trắng */
+        .skin-metal-6, .skin-metal-7, .skin-metal-8, .skin-metal-9,
+        .skin-metal-13, .skin-metal-14, .skin-metal-15, .skin-metal-16,
+        .skin-metal-17, .skin-metal-18, .skin-metal-22, .skin-metal-23,
+        .skin-metal-24, .skin-metal-25, .skin-metal-26, .skin-metal-27,
+        .skin-metal-31, .skin-metal-32, .skin-metal-33, .skin-metal-34,
+        .skin-metal-35, .skin-metal-36 {
+            color: #fff;
+        }
+        /* ------------------------------------------------------------------- */
+        /* TIER 3: SILVER (S) - 2 SKINS - MÀU BẠC */
+        /* ------------------------------------------------------------------- */
+        .skin-silver-1 {
+            background: linear-gradient(145deg, #f0f0f0, #d4d4d4); /* Bạc sáng */
+            color: #333;
+            border: 2px solid #e0e0e0;
+            box-shadow: 0 0 5px #c0c0c0;
+        }
+        .skin-silver-2 {
+            background: linear-gradient(145deg, #b0b0b0, #7f8c8d); /* Bạc xám đậm */
+            color: #fff;
+            border: 2px solid #6c757d;
+            box-shadow: 0 0 10px #7f8c8d;
+        }
+
+
+        /* ------------------------------------------------------------------- */
+        /* TIER 4: GOLDEN (G) - 2 SKINS - MÀU VÀNG */
+        /* ------------------------------------------------------------------- */
+        .skin-golden-1 {
+            background: linear-gradient(145deg, #fff3b0, #ffd700); /* Vàng chanh sáng */
+            color: #333;
+            border: 2px solid #e5c100;
+            box-shadow: 0 0 10px #ffd700;
+        }
+        .skin-golden-2 {
+            background: linear-gradient(145deg, #ffae00, #b8860b); /* Vàng đậm, cổ điển */
+            color: #fff;
+            border: 2px solid #8f6a00;
+            box-shadow: 0 0 15px #ffae00;
+        }
+
+
+        /* ------------------------------------------------------------------- */
+        /* TIER 5: PLATINUM (PL) - 10 SKINS - MÀU BẠCH KIM */
+        /* ------------------------------------------------------------------- */
+        /* PL1 -> PL5: Sáng dần */
+        .skin-platinum-1 { background: #e5e4e2; color: #2c3e50; border: 3px double #ccc; box-shadow: 0 0 15px #e5e4e2; }
+        .skin-platinum-2 { background: #d0d0ce; color: #2c3e50; border: 3px double #b0b0ae; box-shadow: 0 0 16px #d0d0ce; }
+        .skin-platinum-3 { background: #bdbdbd; color: #2c3e50; border: 3px double #909090; box-shadow: 0 0 17px #bdbdbd; }
+        .skin-platinum-4 { background: #a8a8a8; color: #fff; border: 3px double #787878; box-shadow: 0 0 18px #a8a8a8; }
+        .skin-platinum-5 { background: #909090; color: #fff; border: 3px double #585858; box-shadow: 0 0 19px #909090; }
+
+        /* PL6 -> PL10: Tối/Xanh/Tím dần */
+        .skin-platinum-6 { background: #7b8e9c; color: #fff; border: 3px double #607d8b; box-shadow: 0 0 20px #7b8e9c; }
+        .skin-platinum-7 { background: #5c6a78; color: #fff; border: 3px double #455a64; box-shadow: 0 0 21px #5c6a78; }
+        .skin-platinum-8 { background: #404c56; color: #fff; border: 3px double #263238; box-shadow: 0 0 22px #404c56; }
+        .skin-platinum-9 { background: #2f3e48; color: #fff; border: 3px double #1f2a33; box-shadow: 0 0 23px #2f3e48; }
+        .skin-platinum-10 { background: #1c2a32; color: #fff; border: 3px double #000; box-shadow: 0 0 24px #1c2a32; }
+
+
+        /* ------------------------------------------------------------------- */
+        /* TIER 6: DIAMOND (D) - 8 SKINS - CHUYỂN MÀU TỪ NHẠT ĐẾN ĐẬM */
+        /* ------------------------------------------------------------------- */
+
+        /* Diamond 1 (Nhạt nhất) */
+        .skin-diamond-1 {
+            background: #e0f7fa; /* Xanh băng rất nhạt */
+            color: #000;
+            border: 3px solid #b2ebf2;
+            box-shadow: 0 0 10px #b2ebf2;
+        }
+
+        /* Diamond 2 */
+        .skin-diamond-2 {
+            background: #b2ebf2; /* Xanh nhạt */
+            color: #000;
+            border: 3px solid #80deea;
+            box-shadow: 0 0 15px #80deea;
+        }
+
+        /* Diamond 3 */
+        .skin-diamond-3 {
+            background: #80deea; /* Xanh trung bình */
+            color: #000;
+            border: 3px solid #4dd0e1;
+            box-shadow: 0 0 20px #4dd0e1;
+        }
+
+        /* Diamond 4 */
+        .skin-diamond-4 {
+            background: #4dd0e1; /* Xanh sáng hơn */
+            color: #000;
+            border: 3px solid #00bcd4;
+            box-shadow: 0 0 25px #00bcd4;
+        }
+
+        /* Diamond 5 */
+        .skin-diamond-5 {
+            background: #00bcd4; /* Xanh Tiêu Chuẩn */
+            color: #fff; /* Chuyển sang chữ trắng */
+            border: 3px solid #00acc1;
+            box-shadow: 0 0 30px #00acc1;
+        }
+
+        /* Diamond 6 */
+        .skin-diamond-6 {
+            background: #00acc1; /* Xanh đậm hơn */
+            color: #fff;
+            border: 3px solid #0097a7;
+            box-shadow: 0 0 35px #0097a7;
+        }
+
+        /* Diamond 7 */
+        .skin-diamond-7 {
+            background: #00838f; /* Xanh sâu */
+            color: #fff;
+            border: 3px solid #006064;
+            box-shadow: 0 0 40px #006064;
+        }
+
+        /* Diamond 8 (Đậm nhất) */
+        .skin-diamond-8 {
+            background: #004d40; /* Xanh ngọc đậm nhất */
+            color: #fff;
+            border: 3px solid #00363a;
+            box-shadow: 0 0 45px #00363a;
+        }
+
+
+        /* ------------------------------------------------------------------- */
+        /* TIER 7: TITAN (T) - 4 SKINS - CHUYỂN MÀU TỪ SÁNG ĐẾN ĐEN */
+        /* ------------------------------------------------------------------- */
+        .skin-titan-1 {
+            background: linear-gradient(145deg, #bdc3c7, #95a5a6); /* Titan Sáng */
+            color: #333;
+            border: 4px solid #b0c4de;
+            box-shadow: 0 0 20px #bdc3c7;
+        }
+        .skin-titan-2 {
+            background: linear-gradient(145deg, #6c7a89, #47535e); /* Titan Trung Bình */
+            color: #ecf0f1;
+            border: 4px solid #7f8c8d;
+            box-shadow: 0 0 30px #6c7a89;
+        }
+        .skin-titan-3 {
+            background: linear-gradient(145deg, #34495e, #2c3e50); /* Titan Đậm */
+            color: #ecf0f1;
+            border: 4px solid #34495e;
+            box-shadow: 0 0 40px #34495e;
+        }
+        .skin-titan-4 {
+            background: linear-gradient(145deg, #1c2833, #000000); /* Titan Đen */
+            color: #b0c4de;
+            border: 4px solid #1c2833;
+            box-shadow: 0 0 50px #1c2833;
+        }
+
+
+        /* ------------------------------------------------------------------- */
+        /* TIER 8: COLOR-SHIFT (CS) - 8 SKINS - CHUYỂN MÀU ĐỘC LẬP */
+        /* ------------------------------------------------------------------- */
+
+        /* Tạo keyframes riêng cho từng cặp chuyển màu (shift-X) */
+        @keyframes shift-1{0%{background:#ff0000}50%{background:#ffa500}100%{background:#ff0000}} /* Đỏ - Cam */
+        @keyframes shift-2{0%{background:#ffa500}50%{background:#ffff00}100%{background:#ffa500}} /* Cam - Vàng */
+        @keyframes shift-3{0%{background:#ffff00}50%{background:#00ff00}100%{background:#ffff00}} /* Vàng - Xanh Lá */
+        @keyframes shift-4{0%{background:#00ff00}50%{background:#00ffff}100%{background:#00ff00}} /* Xanh Lá - Xanh Biển */
+        @keyframes shift-5{0%{background:#00ffff}50%{background:#4b0082}100%{background:#00ffff}} /* Xanh Biển - Chàm */
+        @keyframes shift-6{0%{background:#4b0082}50%{background:#9400d3}100%{background:#4b0082}} /* Chàm - Tím */
+        @keyframes shift-7{0%{background:#000000}50%{background:#ffffff}100%{background:#000000}} /* Đen - Trắng */
+        @keyframes shift-8{0%{background:#ffffff; color:#000}50%{background:#000000; color:#fff}100%{background:#ffffff; color:#000}} /* Trắng - Đen */
+
+        .skin-shift-1 { 
+            color: #fff;
+            border: 4px solid #fff;
+            animation: shift-1 3s infinite alternate; 
+        }
+
+        .skin-shift-2 {
+            color: #fff;
+            border: 4px solid #fff;
+            animation: shift-2 3s infinite alternate; 
+        }
+
+        .skin-shift-3 {
+            color: #333; /* Chữ đen vì nền vàng/xanh sáng */
+            border: 4px solid #333;
+            animation: shift-3 3s infinite alternate; 
+        }
+
+        .skin-shift-4 {
+            color: #fff;
+            border: 4px solid #fff;
+            animation: shift-4 3s infinite alternate; 
+        }
+
+        .skin-shift-5 {
+            color: #fff;
+            border: 4px solid #fff;
+            animation: shift-5 3s infinite alternate; 
+        }
+
+        .skin-shift-6 {
+            color: #fff;
+            border: 4px solid #fff;
+            animation: shift-6 3s infinite alternate; 
+        }
+
+        .skin-shift-7 { 
+            color: #fff;
+            border: 4px solid #fff;
+            animation: shift-7 3s infinite alternate; 
+        }
+
+        .skin-shift-8 { 
+            /* CS 8 đặc biệt, cần set màu chữ động trong animation */
+            color: #000;
+            border: 4px solid #333;
+            animation: shift-8 3s infinite alternate; 
+        }
+
+        /* ------------------------------------------------------------------- */
+        /* TIER 9: NEON (N) - 6 SKINS - ĐA DẠNG MÀU NEON & HIỆU ỨNG */
+        /* ------------------------------------------------------------------- */
+        .skin-neon-1 { /* Neon Xanh Cyan */
+            background: #000;
+            color: #0ff; 
+            border: 3px solid #0ff;
+            animation: neon 1.5s infinite alternate; 
+            box-shadow: 0 0 15px #0ff;
+        }
+        .skin-neon-2 { /* Neon Đỏ Magenta */
+            background: #000;
+            color: #ff00ff; 
+            border: 3px solid #ff00ff;
+            animation: neon 1.5s infinite alternate; 
+            box-shadow: 0 0 15px #ff00ff;
+        }
+        .skin-neon-3 { /* Neon Xanh Lá Cây */
+            background: #000;
+            color: #39ff14; 
+            border: 3px solid #39ff14;
+            animation: neon 1.5s infinite alternate; 
+            box-shadow: 0 0 15px #39ff14;
+        }
+        .skin-neon-4 { /* Neon Vàng */
+            background: #000;
+            color: #ffff33; 
+            border: 3px solid #ffff33;
+            animation: neon 1.5s infinite alternate; 
+            box-shadow: 0 0 15px #ffff33;
+        }
+        .skin-neon-5 { /* Neon Cam */
+            background: #000;
+            color: #ffaa1d; 
+            border: 3px solid #ffaa1d;
+            animation: neon 1.5s infinite alternate; 
+            box-shadow: 0 0 15px #ffaa1d;
+        }
+        .skin-neon-6 { /* Neon Tím */
+            background: #000;
+            color: #9933ff; 
+            border: 3px solid #9933ff;
+            animation: neon 1.5s infinite alternate; 
+            box-shadow: 0 0 15px #9933ff;
+        }
+
+        /* ------------------------------------------------------------------- */
+        /* TIER 10: RAINBOW (R) - 2 SKINS - HIỆU ỨNG CẦU VỒNG */
+        /* ------------------------------------------------------------------- */
+        .skin-rainbow-1, .skin-rainbow-2 {
+            color: #fff;
+            border: 5px solid #fff;
+            animation: rainbow 6s linear infinite;
+            /* Không cần đặt background vì animation rainbow tự làm màu */
+        }
+
+        /* ------------------------------------------------------------------- */
+        /* TIER 11: DARK MATTER (DM) - 1 SKIN - TỐI THƯỢNG */
+        /* ------------------------------------------------------------------- */
+        .skin-darkmatter-1{
+            background:radial-gradient(circle,#000,#111);
+            color:#8A2BE2;
+            border:6px double #8A2BE2;
+            animation:dm 4s infinite;
+            box-shadow:0 0 70px #8A2BE2
+        }
+
+
+        /* ------------------------------------------------------------------- */
+        /* KEYFRAMES (Animation) */
+        /* ------------------------------------------------------------------- */
+        @keyframes pop { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
+        @keyframes shift{0%{background:#ff0000}50%{background:#00ff00}100%{background:#ff0000}}
+        @keyframes rainbow{0%{background:#ff0000}16%{background:#ff8c00}33%{background:#ffff00}50%{background:#00ff00}66%{background:#00ffff}83%{background:#8a2be2}100%{background:#ff0000}}
+        @keyframes neon{0%,100%{box-shadow:0 0 15px currentColor}50%{box-shadow:0 0 70px currentColor}}
+        @keyframes dm{0%,100%{box-shadow:0 0 30px #8A2BE2}50%{box-shadow:0 0 120px #8A2BE2}}
+        
+        .shop-item{
+            background:rgba(255,255,255,0.15);
+            border-radius:15px;
+            padding:20px;
+            text-align:left;
+            transition:all .3s;
+        }
+        .shop-item:hover{transform:translateY(-8px);box-shadow:0 15px 30px rgba(0,0,0,0.5)}
+        .shop-item h3{color:#1e88e5} /* Đổi từ vàng sang xanh để đồng bộ với theme */
+        .shop-item p{font-size:0.95em;margin:8px 0;color:#333} /* Đổi màu chữ sang đen */
+        .shop-item .price{font-size:1.3em;color:#4caf50;font-weight:bold}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>WCL GACHA x10</h1>
+    <div style="font-size:1.6em;color:#ffd700;margin-bottom:20px">151 Skin • cố mà farm đủ đi!!!</div>
+   
+    <div class="economy-bar">
+        <span>SMC: <span id="smc">0</span></span>
+        <span>Vòng: <span id="spins">0</span></span>
+        <span>Skin: <span id="owned">0</span>/151</span>
+    </div>
+    <div id="current-skin-display">gacha is here!!!</div>
+    <div class="btn-group">
+        <button id="gacha-x1">QUAY 1 LẦN</button>
+        <button id="gacha-x10">QUAY 10 LẦN</button>
+    </div>
+    <button id="open-inv" class="action-button">INVENTORY</button>
+    <button id="open-shop" class="action-button">SHOP</button>
+    <div id="results" class="results" style="display:none"></div>
+
+    <div id="inventory" style="display:none;margin-top:40px">
+        <h2>BỘ SƯU TẬP SKIN</h2>
+        <div id="inv-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;margin:25px 0"></div>
+        <button id="clear" style="background:#ff2d55;padding:15px 40px;font-size:1.3em;margin-top:20px">XÓA TOÀN BỘ DỮ LIỆU</button>
+    </div>
+
+    <div id="shop" style="display:none;margin-top:40px">
+        <h2>SHOP VIP</h2>
+        <div class="shop-grid" id="shop-items"></div>
+    </div>
+</div>
+
+<script>
+    // Âm thanh
+    const sound = new Audio("https://cdn.freesound.org/previews/612/612345_567446-lq.mp3");
+    sound.volume = 0.4;
+
+    // Tier để sort
+    const TIER = {'Dark Matter':11,'Rainbow':10,'Neon':9,'Color-Shift':8,'Titan':7,'Diamond':6,'Platinum':5,'Golden':4,'Silver':3,'Metal':2,'Common':1};
+    const getTierNum = s => TIER[s.tier] || 0;
+
+    // Tỉ lệ gốc
+    const BASE_RATES = {
+        'Common': 69.9, 'Metal': 18.0,
+        'Silver': 2.0, 'Golden': 1.0,
+        'Platinum': 1.5, 'Diamond': 1.0, 'Titan': 0.5,
+        'Color-Shift': 3.0, 'Neon': 3.0, 'Rainbow': 0.1,
+        'Dark Matter': 0.01
+    };
+
+    const skins = [];
+    let state = {inventory:[],smc:0,spins:0,buffs:{}};
+
+    // Load save
+    try {
+        const saved = localStorage.getItem('wcl_final_v2');
+        if(saved) state = JSON.parse(saved);
+    } catch(e) { console.log("Reset data"); }
+
+    // Thêm skin
+    function add(tier, count, prefix, cls) {
+        for(let i=1; i<=count; i++) {
+            skins.push({name: `${prefix} ${i}`, tier, className: `${cls}-${i}`});
+        }
+    }
+    add('Common',72,'C','skin-common');
+    add('Metal',36,'M','skin-metal');
+    add('Silver',2,'S','skin-silver');
+    add('Golden',2,'G','skin-golden');
+    add('Platinum',10,'PL','skin-platinum');
+    add('Diamond',8,'D','skin-diamond');
+    add('Titan',4,'T','skin-titan');
+    add('Color-Shift',8,'CS','skin-shift');
+    add('Neon',6,'N','skin-neon');
+    add('Rainbow',2,'R','skin-rainbow');
+    add('Dark Matter',1,'DM','skin-darkmatter');
+
+    const shopItems = [
+        {id:'luck_buff',name:'BUFF Tỉ Lệ Hiếm (+4%)',price:50,desc:'Tăng tỉ lệ Titan+ trong 50 vòng',duration:50},
+        {id:'titan_key',name:'Chìa Khóa Titan',price:120,desc:'Nhận 1 skin Titan chưa có'},
+        {id:'rainbow_skin',name:'Skin Rainbow R-2',price:500,desc:'Mua trực tiếp R 2 (giới hạn 1 lần)',once:true},
+        {id:'smc_x2',name:'BUFF x2 SMC',price:80,desc:'Nhân đôi SMC thưởng trong 100 vòng',duration:100},
+        {id:'exp_x2',name:'BUFF x2 EXP/SMC',price:30,desc:'Nhân đôi phần thưởng ngẫu nhiên 50 vòng',duration:50}
+    ];
+
+    function save() {
+        localStorage.setItem('wcl_final_v2', JSON.stringify(state));
+        updateUI();
+    }
+
+    function updateUI() {
+        document.getElementById('smc').textContent = state.smc;
+        document.getElementById('spins').textContent = state.spins;
+        document.getElementById('owned').textContent = state.inventory.length;
+    }
+
+    // Tính tỉ lệ có buff
+    function getRates() {
+        const r = {...BASE_RATES};
+        if(state.buffs.luck_buff && state.spins < state.buffs.luck_buff) {
+            r.Titan += 2.0;
+            r.Diamond += 1.0;
+            r.Rainbow += 0.3;
+            r['Dark Matter'] += 0.05;
+            r.Common -= 3.0;
+            r.Metal -= 0.35;
+        }
+        return r;
+    }
+
+    // **LƯU Ý: Chức năng roll() của bạn không được cung cấp, tôi giữ nguyên cấu trúc này**
+    function roll(count) {
+        // ... (Logic roll của bạn)
+        // Ví dụ tạm thời:
+        if (state.smc < 10) return; // Bảo vệ
+        state.smc -= 10;
+        state.spins += count;
+        
+        const results = [];
+        for (let i = 0; i < count; i++) {
+            // Logic quay Gacha sẽ ở đây
+            const randomSkin = skins[Math.floor(Math.random() * skins.length)];
+            results.push(randomSkin);
+            if (!state.inventory.includes(randomSkin.name)) {
+                state.inventory.push(randomSkin.name);
+            }
+        }
+
+        save();
+        showResults(results);
+    }
+    
+    function showResults(arr) {
+        const container = document.getElementById('results');
+        container.style.display = 'grid';
+        container.innerHTML = '';
+
+        arr.forEach((skin, idx) => {
+            setTimeout(() => {
+                const el = document.createElement('div');
+                el.className = `result-item ${skin.className}`;
+                el.textContent = skin.name;
+                container.appendChild(el);
+
+                // Confetti đẹp hơn
+                const tier = getTierNum(skin);
+                if(tier >= 11) confetti({particleCount:800, spread:160, origin:{y:0.6}});
+                else if(tier >= 10) confetti({particleCount:600, spread:140, colors:['#ff0000','#ffd700','#00ff00','#00ffff','#ff00ff']});
+                else if(tier >= 8) confetti({particleCount:300, spread:100});
+
+                // Cập nhật skin hiện tại (chỉ lần cuối)
+                if(idx === arr.length-1) {
+                    const display = document.getElementById('current-skin-display');
+                    // LỖI ĐÃ ĐƯỢC SỬA TẠI ĐÂY: display.className GHI ĐÈ LỚP MẶC ĐỊNH
+                    display.className = `result-item ${skin.className}`; // Thêm result-item để đảm bảo style padding/font
+                    display.textContent = skin.name;
+                }
+            }, idx * 300);
+        });
+        setTimeout(() => container.style.display = 'none', arr.length * 300 + 3000);
+    }
+
+    // Shop
+    function renderShop() {
+        const container = document.getElementById('shop-items');
+        container.innerHTML = '';
+        shopItems.forEach(item => {
+            const bought = item.once && state.buffs[item.id];
+            const active = item.duration && state.buffs[item.id] && state.spins <= state.buffs[item.id];
+            const remaining = active ? state.buffs[item.id] - state.spins : 0;
+            const disabled = state.smc < item.price || bought;
+
+            const div = document.createElement('div');
+            div.className = 'shop-item';
+            div.innerHTML = `
+                <h3>${item.name} ${active ? `<small style="color:#0f0">(${remaining} vòng)</small>` : ''}</h3>
+                <p>${item.desc}</p>
+                <p class="price">${item.price} SMC</p>
+                <button class="buy-btn ${disabled?'disabled-btn':''}" ${disabled?'disabled':''} data-id="${item.id}">
+                    ${bought ? 'ĐÃ MUA' : state.smc < item.price ? 'KHÔNG ĐỦ' : 'MUA NGAY'}
+                </button>
+            `;
+            container.appendChild(div);
+        });
+
+        document.querySelectorAll('#shop .buy-btn:not(.disabled-btn)').forEach(btn => {
+            btn.onclick = () => buyItem(btn.dataset.id);
+        });
+    }
+
+    function buyItem(id) {
+        const item = shopItems.find(x => x.id === id);
+        if(state.smc < item.price) return;
+        state.smc -= item.price;
+
+        if(item.once) {
+            if(id === 'rainbow_skin') {
+                const r2 = skins.find(s => s.name === 'R 2');
+                if(r2 && !state.inventory.includes('R 2')) state.inventory.push('R 2');
+            }
+            state.buffs[id] = true;
+        } else if(id === 'titan_key') {
+            const avail = skins.filter(s => s.tier==='Titan' && !state.inventory.includes(s.name));
+            if(avail.length > 0) {
+                const chosen = avail[Math.floor(Math.random()*avail.length)];
+                state.inventory.push(chosen.name);
+                alert('Nhận được: ' + chosen.name);
+            } else {
+                alert('Bạn đã sở hữu hết Titan rồi!');
+                state.smc += item.price;
+            }
+        } else if(item.duration) {
+            const end = state.spins + item.duration;
+            state.buffs[id] = Math.max(state.buffs[id]||0, end);
+        }
+
+        save();
+        renderShop();
+    }
+
+    // Event - ĐÃ SỬA LỖI Ở ĐÂY
+    document.getElementById('gacha-x1').onclick = () => roll(1);
+    document.getElementById('gacha-x10').onclick = () => {
+        const btn1 = document.getElementById('gacha-x1');
+        const btn10 = document.getElementById('gacha-x10');
+        btn1.disabled = btn10.disabled = true;
+        roll(10);
+        setTimeout(() => { btn1.disabled = btn10.disabled = false; }, 4500);
+    };
+
+    document.getElementById('open-inv').onclick = () => {
+        document.getElementById('inventory').style.display = 'block';
+        document.getElementById('shop').style.display = 'none';
+        const list = document.getElementById('inv-list');
+        list.innerHTML = '';
+        skins
+            .filter(s => state.inventory.includes(s.name))
+            .sort((a,b) => getTierNum(b) - getTierNum(a))
+            .forEach(s => {
+                const el = document.createElement('div');
+                el.className = `result-item ${s.className}`;
+                el.textContent = s.name;
+                list.appendChild(el);
+            });
+    };
+
+    document.getElementById('open-shop').onclick = () => {
+        document.getElementById('shop').style.display = 'block';
+        document.getElementById('inventory').style.display = 'none';
+        renderShop();
+    };
+
+    document.getElementById('clear').onclick = () => {
+        if(confirm('XÓA HẾT DỮ LIỆU THẬT CHỨ?')) {
+            localStorage.removeItem('wcl_final_v2');
+            location.reload();
+        }
+    };
+    
+    // Thêm SMC khởi điểm để dễ test
+    if (state.smc === 0 && state.spins === 0) {
+        state.smc = 1000;
+        save();
+    }
+
+    // Khởi động
+    updateUI();
+</script>
+</body>
+</html>
