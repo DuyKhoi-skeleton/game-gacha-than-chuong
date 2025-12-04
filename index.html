@@ -564,35 +564,24 @@
             animation:dm 4s infinite;
             box-shadow:0 0 70px #8A2BE2
         }
-.moon-neon-skin {
-    /* Animation Vàng-Trắng-Vàng 3s */
-    animation: moon-neon 3s ease-in-out infinite alternate;
-    
-    /* Màu nền giả lập bề mặt mặt trăng */
-    background: radial-gradient(circle at 50% 50%, #cccccc 0%, #808080 100%);
-    
-    /* Thiết lập chữ và border ban đầu */
-    color: #fffacd; /* Vàng kem */
-    border: 3px solid #ffd700; 
-}
+        
+        /* ------------------------------------------------------------------- */
+        /* TIER 12: MOON (M) - 1 SKIN - SIÊU HIẾM (CẬP NHẬT) */
+        /* ------------------------------------------------------------------- */
+        .result-item.moon-neon-skin, #current-skin-display.moon-neon-skin {
+            /* Animation Vàng-Trắng-Vàng 3s */
+            animation: moon-neon 3s ease-in-out infinite alternate;
+            
+            /* Màu nền giả lập bề mặt mặt trăng (Khoa học Trái Đất/Không gian!) */
+            background: radial-gradient(circle at 50% 50%, #cccccc 0%, #808080 100%);
+            
+            /* Thiết lập chữ và border ban đầu */
+            color: #fffacd; /* Vàng kem */
+            border: 3px solid #ffd700; 
+            /* Thêm box-shadow ban đầu để hiệu ứng glow rõ ràng hơn */
+            box-shadow: 0 0 15px #ffd700;
+        }
 
-@keyframes moon-neon {
-    0% { 
-        color: #fffacd; /* Vàng kem nhạt */
-        border-color: #ffd700; /* Vàng Gold */
-        text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff; /* Bóng vàng nhạt */
-    }
-    50% { 
-        color: #ffffff; /* Trắng tinh khiết */
-        border-color: #ffffff; /* Trắng sáng */
-        text-shadow: 0 0 20px #ffffff, 0 0 30px #ffcc00; /* Bóng trắng sáng nhất */
-    }
-    100% { 
-        color: #fffacd; /* Quay lại vàng kem */
-        border-color: #ffd700;
-        text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff;
-    }
-}
         /* (Phần lớn CSS skin giữ nguyên - mình không thay đổi nữa để khỏi phá giao diện) */
 
         @keyframes pop { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
@@ -600,6 +589,25 @@
         @keyframes rainbow{0%{background:#ff0000}16%{background:#ff8c00}33%{background:#ffff00}50%{background:#00ff00}66%{background:#00ffff}83%{background:#8a2be2}100%{background:#ff0000}}
         @keyframes neon{0%,100%{box-shadow:0 0 15px currentColor}50%{box-shadow:0 0 70px currentColor}}
         @keyframes dm{0%,100%{box-shadow:0 0 30px #8A2BE2}50%{box-shadow:0 0 120px #8A2BE2}}
+
+        /* KEYFRAMES CHO MOON NEON (Mới) */
+        @keyframes moon-neon {
+            0% { 
+                color: #fffacd; /* Vàng kem nhạt */
+                border-color: #ffd700; /* Vàng Gold */
+                text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff; /* Bóng vàng nhạt */
+            }
+            50% { 
+                color: #ffffff; /* Trắng tinh khiết */
+                border-color: #ffffff; /* Trắng sáng */
+                text-shadow: 0 0 20px #ffffff, 0 0 30px #ffcc00; /* Bóng trắng sáng nhất */
+            }
+            100% { 
+                color: #fffacd; /* Quay lại vàng kem */
+                border-color: #ffd700;
+                text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff;
+            }
+        }
         
         .shop-item{
             background:rgba(255,255,255,0.15);
@@ -617,12 +625,12 @@
 <body>
 <div class="container">
     <h1>WCL GACHA x10</h1>
-    <div style="font-size:1.6em;color:#ffd700;margin-bottom:20px">151 Skin • cố mà farm đủ đi!!!</div>
+    <div style="font-size:1.6em;color:#ffd700;margin-bottom:20px">152 Skin • cố mà farm đủ đi!!!</div>
    
     <div class="economy-bar">
         <span>SMC: <span id="smc">0</span></span>
         <span>Vòng: <span id="spins">0</span></span>
-        <span>Skin: <span id="owned">0</span>/151</span>
+        <span>Skin: <span id="owned">0</span>/152</span>
     </div>
     <div id="current-skin-display">gacha is here!!!</div>
     <div class="btn-group">
@@ -650,19 +658,22 @@
     const sound = new Audio("https://cdn.freesound.org/previews/612/612345_567446-lq.mp3");
     sound.volume = 0.4;
 
-    const TIER = {'Dark Matter':11,'Rainbow':10,'Neon':9,'Color-Shift':8,'Titan':7,'Diamond':6,'Platinum':5,'Golden':4,'Silver':3,'Metal':2,'Common':1};
+    // CẬP NHẬT: Thêm Tier 'Moon' (Tier 12)
+    const TIER = {'Moon':12,'Dark Matter':11,'Rainbow':10,'Neon':9,'Color-Shift':8,'Titan':7,'Diamond':6,'Platinum':5,'Golden':4,'Silver':3,'Metal':2,'Common':1};
     const getTierNum = s => {
         if(!s) return 0;
         if(typeof s === 'string') return TIER[s] || 0;
         return TIER[s.tier] || 0;
     };
 
+    // CẬP NHẬT: Thêm Tỉ Lệ 'Moon' và điều chỉnh Common
     const BASE_RATES = {
-        'Common': 69.9, 'Metal': 18.0,
+        'Common': 69.895, 'Metal': 18.0, // Đã giảm Common 0.005
         'Silver': 2.0, 'Golden': 1.0,
         'Platinum': 1.5, 'Diamond': 1.0, 'Titan': 0.5,
         'Color-Shift': 3.0, 'Neon': 3.0, 'Rainbow': 0.1,
-        'Dark Matter': 0.01
+        'Dark Matter': 0.01,
+        'Moon': 0.005 // Tỉ lệ siêu hiếm
     };
 
     const skins = [];
@@ -689,6 +700,8 @@
     add('Neon',6,'N','skin-neon');
     add('Rainbow',2,'R','skin-rainbow');
     add('Dark Matter',1,'DM','skin-darkmatter');
+    // CẬP NHẬT: Thêm Skin Moon Neon
+    skins.push({name: 'Moon Neon 1', tier: 'Moon', className: 'moon-neon-skin'});
 
     const shopItems = [
         {id:'luck_buff',name:'BUFF Tỉ Lệ Hiếm (+4%)',price:50,desc:'Tăng tỉ lệ Titan+ trong 50 vòng',duration:50},
@@ -707,6 +720,8 @@
         document.getElementById('smc').textContent = state.smc;
         document.getElementById('spins').textContent = state.spins;
         document.getElementById('owned').textContent = state.inventory.length;
+        // Cập nhật tổng số skin
+        document.querySelector('.economy-bar span:nth-child(3)').innerHTML = `Skin: <span id="owned">${state.inventory.length}</span>/${skins.length}`;
     }
 
     function getRates() {
@@ -716,8 +731,9 @@
             r.Diamond += 1.0;
             r.Rainbow += 0.3;
             r['Dark Matter'] += 0.05;
+            r.Moon += 0.005; // Tăng thêm tỉ lệ Moon
             r.Common -= 3.0;
-            r.Metal -= 0.35;
+            r.Metal -= 0.355; // Điều chỉnh giảm Metal thêm 0.005
         }
         return r;
     }
@@ -748,7 +764,7 @@
         }
 
         // confetti khi có skin hiếm
-        const rareTiers = ['Titan','Diamond','Rainbow','Dark Matter','Platinum','Golden'];
+        const rareTiers = ['Titan','Diamond','Rainbow','Dark Matter','Platinum','Golden','Moon'];
         if(results.some(r=> rareTiers.includes(r.tier))) {
             try { confetti({particleCount:80,spread:80}); } catch(e){/* no confetti lib */} 
         }
@@ -797,7 +813,8 @@
                 // thưởng SMC cơ bản theo tier
                 const tierNum = getTierNum(pulledSkin);
                 let rewardSMC = 0;
-                if (tierNum >= 11) { rewardSMC = 1000; } 
+                if (tierNum >= 12) { rewardSMC = 2500; } // Moon: SMC thưởng cao nhất
+                else if (tierNum >= 11) { rewardSMC = 1000; } 
                 else if (tierNum >= 10) { rewardSMC = 200; } 
                 else if (tierNum >= 9) { rewardSMC = 50; } 
                 else if (tierNum >= 8) { rewardSMC = 20; } 
