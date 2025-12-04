@@ -36,7 +36,6 @@
         }
         @keyframes glow{from{text-shadow:0 0 20px #fff}to{text-shadow:0 0 40px #0ff}}
         
-        /* Styling cho thanh thông tin SMC/Vòng/Skin */
         .economy-bar{
             background: #1e88e5; 
             color: #fff;
@@ -50,9 +49,6 @@
             margin:20px 0;
         }
 
-        /* * ĐÃ SỬA LỖI LỚN NHẤT: BỎ background, color, box-shadow CÓ !important.
-         * Giờ đây, màu sắc sẽ do class skin (ví dụ: .skin-darkmatter-1) quyết định.
-         */
         #current-skin-display{
             height:120px;
             line-height:120px;
@@ -61,8 +57,6 @@
             margin:25px 0;
             border-radius:18px;
             transition:all .5s;
-            
-            /* Đặt màu mặc định nhẹ nhàng, không dùng !important */
             background: #f0f0f0; 
             color: #333;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -80,6 +74,7 @@
             cursor:pointer;
             transition:all .3s;
             box-shadow:0 8px 15px rgba(0,0,0,0.4);
+            user-select:none;
         }
         #gacha-x1{background:#ff2d55;color:#fff}
         #gacha-x10{background:#ff9500;color:#fff;font-size:1.6em;padding:22px 50px}
@@ -94,7 +89,6 @@
             grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
             gap:15px;
         }
-        /* Sửa lỗi hiển thị chung */
         .result-item {
             padding: 16px;
             border-radius: 15px;
@@ -104,8 +98,7 @@
             border: 1px solid rgba(0, 0, 0, 0.1); 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
         }
-
-        /* ------------------------------------------------------------------- */
+/* ------------------------------------------------------------------- */
         /* TIER 1: COMMON (C) - 72 SKINS - BẢNG MÀU QUANG PHỔ (CẬP NHẬT LẦN 2) */
         /* ------------------------------------------------------------------- */
         /* Áp dụng style chung cho toàn bộ skin C */
@@ -571,11 +564,37 @@
             animation:dm 4s infinite;
             box-shadow:0 0 70px #8A2BE2
         }
+.moon-neon-skin {
+    /* Animation Vàng-Trắng-Vàng 3s */
+    animation: moon-neon 3s ease-in-out infinite alternate;
+    
+    /* Màu nền giả lập bề mặt mặt trăng */
+    background: radial-gradient(circle at 50% 50%, #cccccc 0%, #808080 100%);
+    
+    /* Thiết lập chữ và border ban đầu */
+    color: #fffacd; /* Vàng kem */
+    border: 3px solid #ffd700; 
+}
 
+@keyframes moon-neon {
+    0% { 
+        color: #fffacd; /* Vàng kem nhạt */
+        border-color: #ffd700; /* Vàng Gold */
+        text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff; /* Bóng vàng nhạt */
+    }
+    50% { 
+        color: #ffffff; /* Trắng tinh khiết */
+        border-color: #ffffff; /* Trắng sáng */
+        text-shadow: 0 0 20px #ffffff, 0 0 30px #ffcc00; /* Bóng trắng sáng nhất */
+    }
+    100% { 
+        color: #fffacd; /* Quay lại vàng kem */
+        border-color: #ffd700;
+        text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff;
+    }
+}
+        /* (Phần lớn CSS skin giữ nguyên - mình không thay đổi nữa để khỏi phá giao diện) */
 
-        /* ------------------------------------------------------------------- */
-        /* KEYFRAMES (Animation) */
-        /* ------------------------------------------------------------------- */
         @keyframes pop { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
         @keyframes shift{0%{background:#ff0000}50%{background:#00ff00}100%{background:#ff0000}}
         @keyframes rainbow{0%{background:#ff0000}16%{background:#ff8c00}33%{background:#ffff00}50%{background:#00ff00}66%{background:#00ffff}83%{background:#8a2be2}100%{background:#ff0000}}
@@ -590,8 +609,8 @@
             transition:all .3s;
         }
         .shop-item:hover{transform:translateY(-8px);box-shadow:0 15px 30px rgba(0,0,0,0.5)}
-        .shop-item h3{color:#1e88e5} /* Đổi từ vàng sang xanh để đồng bộ với theme */
-        .shop-item p{font-size:0.95em;margin:8px 0;color:#333} /* Đổi màu chữ sang đen */
+        .shop-item h3{color:#1e88e5}
+        .shop-item p{font-size:0.95em;margin:8px 0;color:#333}
         .shop-item .price{font-size:1.3em;color:#4caf50;font-weight:bold}
     </style>
 </head>
@@ -627,15 +646,17 @@
 </div>
 
 <script>
-    // Âm thanh
+    // âm thanh (có thể bị trình duyệt chặn autoplay nếu chưa tương tác)
     const sound = new Audio("https://cdn.freesound.org/previews/612/612345_567446-lq.mp3");
     sound.volume = 0.4;
 
-    // Tier để sort
     const TIER = {'Dark Matter':11,'Rainbow':10,'Neon':9,'Color-Shift':8,'Titan':7,'Diamond':6,'Platinum':5,'Golden':4,'Silver':3,'Metal':2,'Common':1};
-    const getTierNum = s => TIER[s.tier] || 0;
+    const getTierNum = s => {
+        if(!s) return 0;
+        if(typeof s === 'string') return TIER[s] || 0;
+        return TIER[s.tier] || 0;
+    };
 
-    // Tỉ lệ gốc
     const BASE_RATES = {
         'Common': 69.9, 'Metal': 18.0,
         'Silver': 2.0, 'Golden': 1.0,
@@ -647,13 +668,11 @@
     const skins = [];
     let state = {inventory:[],smc:0,spins:0,buffs:{}};
 
-    // Load save
     try {
         const saved = localStorage.getItem('wcl_final_v2');
         if(saved) state = JSON.parse(saved);
     } catch(e) { console.log("Reset data"); }
 
-    // Thêm skin
     function add(tier, count, prefix, cls) {
         for(let i=1; i<=count; i++) {
             skins.push({name: `${prefix} ${i}`, tier, className: `${cls}-${i}`});
@@ -690,7 +709,6 @@
         document.getElementById('owned').textContent = state.inventory.length;
     }
 
-    // Tính tỉ lệ có buff
     function getRates() {
         const r = {...BASE_RATES};
         if(state.buffs.luck_buff && state.spins < state.buffs.luck_buff) {
@@ -704,59 +722,112 @@
         return r;
     }
 
-    // **LƯU Ý: Chức năng roll() của bạn không được cung cấp, tôi giữ nguyên cấu trúc này**
+    // HÀM HIỂN THỊ KẾT QUẢ (đơn giản)
+    function showResults(results) {
+        const wrap = document.getElementById('results');
+        wrap.style.display = results.length ? 'grid' : 'none';
+        wrap.innerHTML = '';
+        if(results.length === 0) return;
+
+        // Hiển thị mỗi result
+        results.forEach(r => {
+            const el = document.createElement('div');
+            el.className = `result-item ${r.className}`;
+            el.textContent = r.name + ' (' + r.tier + ')';
+            wrap.appendChild(el);
+        });
+
+        // update current skin display with first result's class
+        const display = document.getElementById('current-skin-display');
+        const first = results[0];
+        if(first) {
+            display.textContent = first.name + ' • ' + first.tier;
+            // remove previous skin-* classes (naive but ok)
+            display.className = '';
+            display.classList.add(first.className);
+        }
+
+        // confetti khi có skin hiếm
+        const rareTiers = ['Titan','Diamond','Rainbow','Dark Matter','Platinum','Golden'];
+        if(results.some(r=> rareTiers.includes(r.tier))) {
+            try { confetti({particleCount:80,spread:80}); } catch(e){/* no confetti lib */} 
+        }
+    }
+
+    // HÀM ROLL (duy nhất, an toàn)
     function roll(count) {
-        // ... (Logic roll của bạn)
-        // Ví dụ tạm thời:
-        if (state.smc < 10) return; // Bảo vệ
-        state.smc -= 10;
-        state.spins += count;
-        
+        // prevent negative or 0
+        count = Math.max(1, Math.floor(count)||1);
+
+        // disable buttons quickly (UI)
+        const btn1 = document.getElementById('gacha-x1');
+        const btn10 = document.getElementById('gacha-x10');
+        btn1.disabled = btn10.disabled = true;
+        btn1.classList.add('disabled-btn');
+        btn10.classList.add('disabled-btn');
+
+        // play sound if possible
+        try { sound.currentTime = 0; sound.play(); } catch(e){}
+
+        const rates = getRates();
         const results = [];
+
         for (let i = 0; i < count; i++) {
-            // Logic quay Gacha sẽ ở đây
-            const randomSkin = skins[Math.floor(Math.random() * skins.length)];
-            results.push(randomSkin);
-            if (!state.inventory.includes(randomSkin.name)) {
-                state.inventory.push(randomSkin.name);
+            state.spins += 1; // mỗi lần quay tăng spin một đơn vị
+            const rollValue = Math.random() * 100;
+            let cumulativeRate = 0;
+            let pulledSkin = null;
+
+            for (const tierName in rates) {
+                cumulativeRate += rates[tierName];
+                if (rollValue < cumulativeRate) {
+                    const availableSkins = skins.filter(s => s.tier === tierName);
+                    pulledSkin = availableSkins[Math.floor(Math.random() * availableSkins.length)];
+                    break;
+                }
+            }
+
+            if (pulledSkin) {
+                results.push(pulledSkin);
+                const skinName = pulledSkin.name;
+                if (!state.inventory.includes(skinName)) {
+                    state.inventory.push(skinName);
+                }
+
+                // thưởng SMC cơ bản theo tier
+                const tierNum = getTierNum(pulledSkin);
+                let rewardSMC = 0;
+                if (tierNum >= 11) { rewardSMC = 1000; } 
+                else if (tierNum >= 10) { rewardSMC = 200; } 
+                else if (tierNum >= 9) { rewardSMC = 50; } 
+                else if (tierNum >= 8) { rewardSMC = 20; } 
+                else if (tierNum >= 7) { rewardSMC = 5; }
+
+                // buffs
+                if (state.buffs && state.buffs.smc_x2 && state.spins <= state.buffs.smc_x2) {
+                    rewardSMC *= 2;
+                }
+                if (state.buffs && state.buffs.exp_x2 && state.spins <= state.buffs.exp_x2) {
+                    if (Math.random() < 0.5) { rewardSMC *= 2; } 
+                }
+
+                state.smc += rewardSMC;
             }
         }
 
         save();
+
+        // re-enable after animation-ish time
+        setTimeout(() => {
+            btn1.disabled = btn10.disabled = false;
+            btn1.classList.remove('disabled-btn');
+            btn10.classList.remove('disabled-btn');
+        }, 800);
+
         showResults(results);
     }
-    
-    function showResults(arr) {
-        const container = document.getElementById('results');
-        container.style.display = 'grid';
-        container.innerHTML = '';
 
-        arr.forEach((skin, idx) => {
-            setTimeout(() => {
-                const el = document.createElement('div');
-                el.className = `result-item ${skin.className}`;
-                el.textContent = skin.name;
-                container.appendChild(el);
-
-                // Confetti đẹp hơn
-                const tier = getTierNum(skin);
-                if(tier >= 11) confetti({particleCount:800, spread:160, origin:{y:0.6}});
-                else if(tier >= 10) confetti({particleCount:600, spread:140, colors:['#ff0000','#ffd700','#00ff00','#00ffff','#ff00ff']});
-                else if(tier >= 8) confetti({particleCount:300, spread:100});
-
-                // Cập nhật skin hiện tại (chỉ lần cuối)
-                if(idx === arr.length-1) {
-                    const display = document.getElementById('current-skin-display');
-                    // LỖI ĐÃ ĐƯỢC SỬA TẠI ĐÂY: display.className GHI ĐÈ LỚP MẶC ĐỊNH
-                    display.className = `result-item ${skin.className}`; // Thêm result-item để đảm bảo style padding/font
-                    display.textContent = skin.name;
-                }
-            }, idx * 300);
-        });
-        setTimeout(() => container.style.display = 'none', arr.length * 300 + 3000);
-    }
-
-    // Shop
+    // SHOP RENDER
     function renderShop() {
         const container = document.getElementById('shop-items');
         container.innerHTML = '';
@@ -786,6 +857,7 @@
 
     function buyItem(id) {
         const item = shopItems.find(x => x.id === id);
+        if(!item) return;
         if(state.smc < item.price) return;
         state.smc -= item.price;
 
@@ -814,15 +886,9 @@
         renderShop();
     }
 
-    // Event - ĐÃ SỬA LỖI Ở ĐÂY
+    // BUTTON HANDLERS
     document.getElementById('gacha-x1').onclick = () => roll(1);
-    document.getElementById('gacha-x10').onclick = () => {
-        const btn1 = document.getElementById('gacha-x1');
-        const btn10 = document.getElementById('gacha-x10');
-        btn1.disabled = btn10.disabled = true;
-        roll(10);
-        setTimeout(() => { btn1.disabled = btn10.disabled = false; }, 4500);
-    };
+    document.getElementById('gacha-x10').onclick = () => roll(10);
 
     document.getElementById('open-inv').onclick = () => {
         document.getElementById('inventory').style.display = 'block';
@@ -852,13 +918,11 @@
             location.reload();
         }
     };
-    
-    // Thêm SMC khởi điểm để dễ test
+
     if (state.smc === 0 && state.spins === 0) {
         save();
     }
 
-    // Khởi động
     updateUI();
 </script>
 </body>
