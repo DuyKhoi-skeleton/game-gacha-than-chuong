@@ -547,13 +547,32 @@
         /* ------------------------------------------------------------------- */
         /* TIER 10: RAINBOW (R) - 2 SKINS - HIỆU ỨNG CẦU VỒNG */
         /* ------------------------------------------------------------------- */
-        .skin-rainbow-1, .skin-rainbow-2 {
+        .skin-rainbow-1 { /* R1: QUAY LẠI MÀU BÌNH THƯỜNG (Đỏ -> Tím) */
             color: #fff;
             border: 5px solid #fff;
-            animation: rainbow 6s linear infinite;
-            /* Không cần đặt background vì animation rainbow tự làm màu */
+            animation: rainbow 6s linear infinite; /* Animation gốc */
+        }
+        .skin-rainbow-2 { /* R2: ĐẢO NGƯỢC MÀU (Tím -> Đỏ) theo yêu cầu */
+            color: #fff;
+            border: 5px solid #fff;
+            animation: rainbow_reverse 6s linear infinite; /* Animation đảo ngược */
         }
 
+        /* ... các style khác ... */
+
+        /* Định nghĩa animation đảo ngược (Tím, Chàm, Lam, Lục, Vàng, Cam, Đỏ) */
+        @keyframes rainbow_reverse{
+            0%{background:#8a2be2} /* Tím/Chàm */
+            16%{background:#00ffff} /* Lam */
+            33%{background:#00ff00} /* Lục */
+            50%{background:#ffff00} /* Vàng */
+            66%{background:#ff8c00} /* Cam */
+            83%{background:#ff0000} /* Đỏ */
+            100%{background:#8a2be2} /* Quay lại Tím/Chàm */
+        }
+        
+        /* Định nghĩa animation gốc (Đỏ, Cam, Vàng, Lục, Lam, Chàm, Tím) */
+        @keyframes rainbow{0%{background:#ff0000}16%{background:#ff8c00}33%{background:#ffff00}50%{background:#00ff00}66%{background:#00ffff}83%{background:#8a2be2}100%{background:#ff0000}}
         /* ------------------------------------------------------------------- */
         /* TIER 11: DARK MATTER (DM) - 1 SKIN - TỐI THƯỢNG */
         /* ------------------------------------------------------------------- */
@@ -583,7 +602,7 @@
         }
 
         /* (Phần lớn CSS skin giữ nguyên - mình không thay đổi nữa để khỏi phá giao diện) */
-
+       
         @keyframes pop { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
         @keyframes shift{0%{background:#ff0000}50%{background:#00ff00}100%{background:#ff0000}}
         @keyframes rainbow{0%{background:#ff0000}16%{background:#ff8c00}33%{background:#ffff00}50%{background:#00ff00}66%{background:#00ffff}83%{background:#8a2be2}100%{background:#ff0000}}
