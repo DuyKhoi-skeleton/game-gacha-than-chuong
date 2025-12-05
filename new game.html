@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCL GACHA x10 | Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        /* CSS gốc giữ nguyên, chỉ thêm styling cho màn hình đăng nhập */
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            font-family:'Segoe UI',sans-serif;
+            background-color: #ffffff; 
+            color: #000;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            padding:20px;
+        }
+        .container{
+            background:rgba(255,255,255,0.12);
+            backdrop-filter:blur(15px);
+            border-radius:25px;
+            padding:35px;
+            max-width:950px;
+            width:100%;
+            box-shadow:0 25px 70px rgba(0,0,0,0.7);
+            text-align:center;
+        }
+        h1{
+            font-size:3.5em;
+            background:linear-gradient(90deg,#ff00c8,#ffd000,#00ff9d,#ff00c8);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            margin-bottom:10px;
+            animation:glow 3s infinite alternate;
+        }
+        @keyframes glow{from{text-shadow:0 0 20px #fff}to{text-shadow:0 0 40px #0ff}}
+        
+        .economy-bar{
+            background: #1e88e5; 
+            color: #fff;
+            padding:18px;
+            border-radius:15px;
+            font-size:1.5em;
+            display:flex;
+            justify-content:space-around;
+            flex-wrap:wrap;
+            gap:15px;
+            margin:20px 0;
+        }
+
+        #current-skin-display{
+            height:120px;
+            line-height:120px;
+            font-size:2.5em;
+            font-weight:bold;
+            margin:25px 0;
+            border-radius:18px;
+            transition:all .5s;
+            background: #f0f0f0; 
+            color: #333;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-group{
+            display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:30px 0;
+        }
+        button{
+            padding:18px 40px;
+            font-size:1.4em;
+            font-weight:bold;
+            border:none;
+            border-radius:15px;
+            cursor:pointer;
+            transition:all .3s;
+            box-shadow:0 8px 15px rgba(0,0,0,0.4);
+            user-select:none;
+        }
+        #gacha-x1{background:#ff2d55;color:#fff}
+        #gacha-x10{background:#ff9500;color:#fff;font-size:1.6em;padding:22px 50px}
+        .action-button{background:#007aff;color:#fff}
+        .buy-btn{background:#4caf50;color:#fff}
+        .disabled-btn{background:#666;cursor:not-allowed;opacity:0.6}
+        button:hover:not(.disabled-btn){transform:translateY(-6px);box-shadow:0 12px 20px rgba(0,0,0,0.5)}
+        button:active:not(.disabled-btn){transform:translateY(4px)}
+        .results{
+            margin:30px 0;
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+            gap:15px;
+        }
+        .result-item {
+            padding: 16px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+            animation: pop 0.6s forwards;
+            border: 1px solid rgba(0, 0, 0, 0.1); 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+        }
+        /* Style cho màn hình Auth */
+        #auth-screen{
+            padding: 50px 20px;
+            border: 2px solid #ccc;
+            border-radius: 20px;
+            max-width: 400px;
+            margin: 50px auto;
+            background: #f9f9f9;
+        }
+        #auth-screen input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 1.2em;
+        }
+        #auth-screen .btn-group button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            margin: 5px;
+            width: 45%;
+        }
+        #logout-btn {
+            background: #9933ff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+/* ------------------------------------------------------------------- */
+/* TIER 1: COMMON (C) - 72 SKINS - BẢNG MÀU QUANG PHỔ (CẬP NHẬT LẦN 2) */
+/* (CSS gốc cho skin) */
+/* ------------------------------------------------------------------- */
+        [class^="skin-common-"], [class*=" skin-common-"] { color: #fff; border: 1px solid rgba(0, 0, 0, 0.2); box-shadow: none; }
+        .skin-common-1, .skin-common-2, .skin-common-3, .skin-common-4, .skin-common-11, .skin-common-12, .skin-common-13, .skin-common-21, .skin-common-22, .skin-common-23, .skin-common-24, .skin-common-31, .skin-common-32, .skin-common-33, .skin-common-34, .skin-common-41, .skin-common-42, .skin-common-43, .skin-common-44, .skin-common-71 { color: #333; }
+.skin-common-1 { background: #ff0000; } .skin-common-2 { background: #e00000; } .skin-common-3 { background: #c00000; } .skin-common-4 { background: #a00000; } .skin-common-5 { background: #800000; } .skin-common-6 { background: #600000; } .skin-common-7 { background: #500000; } .skin-common-8 { background: #400000; } .skin-common-9 { background: #350000; } .skin-common-10 { background: #300000; }
+.skin-common-11 { background: #ffa500; } .skin-common-12 { background: #e09000; } .skin-common-13 { background: #c07800; } .skin-common-14 { background: #a06000; } .skin-common-15 { background: #804800; } .skin-common-16 { background: #603600; } .skin-common-17 { background: #502c00; } .skin-common-18 { background: #402400; } .skin-common-19 { background: #351e00; } .skin-common-20 { background: #301a00; }
+.skin-common-21 { background: #ffff00; } .skin-common-22 { background: #e0e000; } .skin-common-23 { background: #c0c000; } .skin-common-24 { background: #a0a000; } .skin-common-25 { background: #808000; } .skin-common-26 { background: #606000; } .skin-common-27 { background: #505000; } .skin-common-28 { background: #404000; } .skin-common-29 { background: #353500; } .skin-common-30 { background: #303000; }
+.skin-common-31 { background: #00ff00; } .skin-common-32 { background: #00e000; } .skin-common-33 { background: #00c000; } .skin-common-34 { background: #00a000; } .skin-common-35 { background: #008000; } .skin-common-36 { background: #006000; } .skin-common-37 { background: #005000; } .skin-common-38 { background: #004000; } .skin-common-39 { background: #003500; } .skin-common-40 { background: #003000; }
+.skin-common-41 { background: #00ffff; } .skin-common-42 { background: #00e0e0; } .skin-common-43 { background: #00c0c0; } .skin-common-44 { background: #00a0a0; } .skin-common-45 { background: #008080; } .skin-common-46 { background: #006060; } .skin-common-47 { background: #005050; } .skin-common-48 { background: #004040; } .skin-common-49 { background: #003535; } .skin-common-50 { background: #003030; }
+.skin-common-51 { background: #6a00ff; } .skin-common-52 { background: #5a00d6; } .skin-common-53 { background: #4a00ad; } .skin-common-54 { background: #3a0084; } .skin-common-55 { background: #30006a; } .skin-common-56 { background: #2a005b; } .skin-common-57 { background: #250050; } .skin-common-58 { background: #200045; } .skin-common-59 { background: #1b003c; } .skin-common-60 { background: #160030; }
+.skin-common-61 { background: #d400ff; } .skin-common-62 { background: #b300d6; } .skin-common-63 { background: #9200ad; } .skin-common-64 { background: #710084; } .skin-common-65 { background: #60006e; } .skin-common-66 { background: #50005b; } .skin-common-67 { background: #40004a; } .skin-common-68 { background: #300039; } .skin-common-69 { background: #200028; } .skin-common-70 { background: #100017; }
+.skin-common-71 { background: #ffffff; border: 2px solid #ddd; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+.skin-common-72 { background: #000000; border: 2px solid #333; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); }
+
+/* ------------------------------------------------------------------- */
+/* TIER 2: METAL (M) - 36 SKINS - MÀU KIM LOẠI ĐA DẠNG & ĐỘ ĐẬM */
+/* (CSS gốc cho skin) */
+/* ------------------------------------------------------------------- */
+.skin-metal-1 { background: linear-gradient(145deg, #f0f0f0, #b0b0b0); } .skin-metal-2 { background: linear-gradient(145deg, #e0e0e0, #a0a0a0); } .skin-metal-3 { background: linear-gradient(145deg, #d0d0d0, #909090); } .skin-metal-4 { background: linear-gradient(145deg, #c0c0c0, #808080); } .skin-metal-5 { background: linear-gradient(145deg, #b0b0b0, #707070); } .skin-metal-6 { background: linear-gradient(145deg, #a0a0a0, #606060); } .skin-metal-7 { background: linear-gradient(145deg, #909090, #505050); } .skin-metal-8 { background: linear-gradient(145deg, #808080, #404040); } .skin-metal-9 { background: linear-gradient(145deg, #707070, #303030); }
+.skin-metal-10 { background: linear-gradient(145deg, #ffc896, #e6a152); } .skin-metal-11 { background: linear-gradient(145deg, #f0b482, #d39246); } .skin-metal-12 { background: linear-gradient(145deg, #e0a06e, #c0833a); } .skin-metal-13 { background: linear-gradient(145deg, #d08c5a, #ad7430); } .skin-metal-14 { background: linear-gradient(145deg, #c07846, #9a6526); } .skin-metal-15 { background: linear-gradient(145deg, #b06432, #87561c); } .skin-metal-16 { background: linear-gradient(145deg, #a0501e, #744712); } .skin-metal-17 { background: linear-gradient(145deg, #903c0a, #61380a); } .skin-metal-18 { background: linear-gradient(145deg, #802800, #4e2900); }
+.skin-metal-19 { background: linear-gradient(145deg, #a9d6ff, #78b4e8); } .skin-metal-20 { background: linear-gradient(145deg, #95c2f0, #69a0d2); } .skin-metal-21 { background: linear-gradient(145deg, #81aee0, #5a8cbc); } .skin-metal-22 { background: linear-gradient(145deg, #6d9ad0, #4b78a6); } .skin-metal-23 { background: linear-gradient(145deg, #5986c0, #3c6490); } .skin-metal-24 { background: linear-gradient(145deg, #4572b0, #2d507a); } .skin-metal-25 { background: linear-gradient(145deg, #315ea0, #1e3c64); } .skin-metal-26 { background: linear-gradient(145deg, #1d4a90, #0f284e); } .skin-metal-27 { background: linear-gradient(145deg, #093680, #001438); }
+.skin-metal-28 { background: linear-gradient(145deg, #fffacd, #e6d8a3); } .skin-metal-29 { background: linear-gradient(145deg, #f0e8b8, #d6c895); } .skin-metal-30 { background: linear-gradient(145deg, #e0d6a3, #c6b887); } .skin-metal-31 { background: linear-gradient(145deg, #d0c48e, #b6a879); } .skin-metal-32 { background: linear-gradient(145deg, #c0b279, #a6986b); } .skin-metal-33 { background: linear-gradient(145deg, #b0a064, #96885d); } .skin-metal-34 { background: linear-gradient(145deg, #a08e4f, #86784f); } .skin-metal-35 { background: linear-gradient(145deg, #907c3a, #766841); } .skin-metal-36 { background: linear-gradient(145deg, #806a25, #665833); }
+[class^="skin-metal-"], [class*=" skin-metal-"] { border: 2px solid rgba(0, 0, 0, 0.3); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
+.skin-metal-1, .skin-metal-2, .skin-metal-3, .skin-metal-4, .skin-metal-5, .skin-metal-10, .skin-metal-11, .skin-metal-12, .skin-metal-19, .skin-metal-20, .skin-metal-21, .skin-metal-28, .skin-metal-29, .skin-metal-30 { color: #333; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5); }
+.skin-metal-6, .skin-metal-7, .skin-metal-8, .skin-metal-9, .skin-metal-13, .skin-metal-14, .skin-metal-15, .skin-metal-16, .skin-metal-17, .skin-metal-18, .skin-metal-22, .skin-metal-23, .skin-metal-24, .skin-metal-25, .skin-metal-26, .skin-metal-27, .skin-metal-31, .skin-metal-32, .skin-metal-33, .skin-metal-34, .skin-metal-35, .skin-metal-36 { color: #fff; }
+
+/* ------------------------------------------------------------------- */
+/* TIER 3-11: SILVER, GOLDEN, PLATINUM, DIAMOND, TITAN, COLOR-SHIFT, NEON, RAINBOW, DARK MATTER */
+/* (CSS gốc cho skin) */
+/* ------------------------------------------------------------------- */
+.skin-silver-1 { background: linear-gradient(145deg, #f0f0f0, #d4d4d4); color: #333; border: 2px solid #e0e0e0; box-shadow: 0 0 5px #c0c0c0; }
+.skin-silver-2 { background: linear-gradient(145deg, #b0b0b0, #7f8c8d); color: #fff; border: 2px solid #6c757d; box-shadow: 0 0 10px #7f8c8d; }
+.skin-golden-1 { background: linear-gradient(145deg, #fff3b0, #ffd700); color: #333; border: 2px solid #e5c100; box-shadow: 0 0 10px #ffd700; }
+.skin-golden-2 { background: linear-gradient(145deg, #ffae00, #b8860b); color: #fff; border: 2px solid #8f6a00; box-shadow: 0 0 15px #ffae00; }
+.skin-platinum-1 { background: #e5e4e2; color: #2c3e50; border: 3px double #ccc; box-shadow: 0 0 15px #e5e4e2; }
+.skin-platinum-2 { background: #d0d0ce; color: #2c3e50; border: 3px double #b0b0ae; box-shadow: 0 0 16px #d0d0ce; }
+.skin-platinum-3 { background: #bdbdbd; color: #2c3e50; border: 3px double #909090; box-shadow: 0 0 17px #bdbdbd; }
+.skin-platinum-4 { background: #a8a8a8; color: #fff; border: 3px double #787878; box-shadow: 0 0 18px #a8a8a8; }
+.skin-platinum-5 { background: #909090; color: #fff; border: 3px double #585858; box-shadow: 0 0 19px #909090; }
+.skin-platinum-6 { background: #7b8e9c; color: #fff; border: 3px double #607d8b; box-shadow: 0 0 20px #7b8e9c; }
+.skin-platinum-7 { background: #5c6a78; color: #fff; border: 3px double #455a64; box-shadow: 0 0 21px #5c6a78; }
+.skin-platinum-8 { background: #404c56; color: #fff; border: 3px double #263238; box-shadow: 0 0 22px #404c56; }
+.skin-platinum-9 { background: #2f3e48; color: #fff; border: 3px double #1f2a33; box-shadow: 0 0 23px #2f3e48; }
+.skin-platinum-10 { background: #1c2a32; color: #fff; border: 3px double #000; box-shadow: 0 0 24px #1c2a32; }
+.skin-diamond-1 { background: #e0f7fa; color: #000; border: 3px solid #b2ebf2; box-shadow: 0 0 10px #b2ebf2; }
+.skin-diamond-2 { background: #b2ebf2; color: #000; border: 3px solid #80deea; box-shadow: 0 0 15px #80deea; }
+.skin-diamond-3 { background: #80deea; color: #000; border: 3px solid #4dd0e1; box-shadow: 0 0 20px #4dd0e1; }
+.skin-diamond-4 { background: #4dd0e1; color: #000; border: 3px solid #00bcd4; box-shadow: 0 0 25px #00bcd4; }
+.skin-diamond-5 { background: #00bcd4; color: #fff; border: 3px solid #00acc1; box-shadow: 0 0 30px #00acc1; }
+.skin-diamond-6 { background: #00acc1; color: #fff; border: 3px solid #0097a7; box-shadow: 0 0 35px #0097a7; }
+.skin-diamond-7 { background: #00838f; color: #fff; border: 3px solid #006064; box-shadow: 0 0 40px #006064; }
+.skin-diamond-8 { background: #004d40; color: #fff; border: 3px solid #00363a; box-shadow: 0 0 45px #00363a; }
+.skin-titan-1 { background: linear-gradient(145deg, #bdc3c7, #95a5a6); color: #333; border: 4px solid #b0c4de; box-shadow: 0 0 20px #bdc3c7; }
+.skin-titan-2 { background: linear-gradient(145deg, #6c7a89, #47535e); color: #ecf0f1; border: 4px solid #7f8c8d; box-shadow: 0 0 30px #6c7a89; }
+.skin-titan-3 { background: linear-gradient(145deg, #34495e, #2c3e50); color: #ecf0f1; border: 4px solid #34495e; box-shadow: 0 0 40px #34495e; }
+.skin-titan-4 { background: linear-gradient(145deg, #1c2833, #000000); color: #b0c4de; border: 4px solid #1c2833; box-shadow: 0 0 50px #1c2833; }
+@keyframes shift-1{0%{background:#ff0000}50%{background:#ffa500}100%{background:#ff0000}}
+@keyframes shift-2{0%{background:#ffa500}50%{background:#ffff00}100%{background:#ffa500}}
+@keyframes shift-3{0%{background:#ffff00}50%{background:#00ff00}100%{background:#ffff00}}
+@keyframes shift-4{0%{background:#00ff00}50%{background:#00ffff}100%{background:#00ff00}}
+@keyframes shift-5{0%{background:#00ffff}50%{background:#4b0082}100%{background:#00ffff}}
+@keyframes shift-6{0%{background:#4b0082}50%{background:#9400d3}100%{background:#4b0082}}
+@keyframes shift-7{0%{background:#000000}50%{background:#ffffff}100%{background:#000000}}
+@keyframes shift-8{0%{background:#ffffff; color:#000}50%{background:#000000; color:#fff}100%{background:#ffffff; color:#000}}
+.skin-shift-1 { color: #fff; border: 4px solid #fff; animation: shift-1 3s infinite alternate; }
+.skin-shift-2 { color: #fff; border: 4px solid #fff; animation: shift-2 3s infinite alternate; }
+.skin-shift-3 { color: #333; border: 4px solid #333; animation: shift-3 3s infinite alternate; }
+.skin-shift-4 { color: #fff; border: 4px solid #fff; animation: shift-4 3s infinite alternate; }
+.skin-shift-5 { color: #fff; border: 4px solid #fff; animation: shift-5 3s infinite alternate; }
+.skin-shift-6 { color: #fff; border: 4px solid #fff; animation: shift-6 3s infinite alternate; }
+.skin-shift-7 { color: #fff; border: 4px solid #fff; animation: shift-7 3s infinite alternate; }
+.skin-shift-8 { color: #000; border: 4px solid #333; animation: shift-8 3s infinite alternate; }
+.skin-neon-1 { background: #000; color: #0ff; border: 3px solid #0ff; animation: neon 1.5s infinite alternate; box-shadow: 0 0 15px #0ff; }
+.skin-neon-2 { background: #000; color: #ff00ff; border: 3px solid #ff00ff; animation: neon 1.5s infinite alternate; box-shadow: 0 0 15px #ff00ff; }
+.skin-neon-3 { background: #000; color: #39ff14; border: 3px solid #39ff14; animation: neon 1.5s infinite alternate; box-shadow: 0 0 15px #39ff14; }
+.skin-neon-4 { background: #000; color: #ffff33; border: 3px solid #ffff33; animation: neon 1.5s infinite alternate; box-shadow: 0 0 15px #ffff33; }
+.skin-neon-5 { background: #000; color: #ffaa1d; border: 3px solid #ffaa1d; animation: neon 1.5s infinite alternate; box-shadow: 0 0 15px #ffaa1d; }
+.skin-neon-6 { background: #000; color: #9933ff; border: 3px solid #9933ff; animation: neon 1.5s infinite alternate; box-shadow: 0 0 15px #9933ff; }
+.skin-rainbow-1, .skin-rainbow-2 { color: #fff; border: 5px solid #fff; animation: rainbow 6s linear infinite; }
+.skin-darkmatter-1{ background:radial-gradient(circle,#000,#111); color:#8A2BE2; border:6px double #8A2BE2; animation:dm 4s infinite; box-shadow:0 0 70px #8A2BE2 }
+.moon-neon-skin { animation: moon-neon 3s ease-in-out infinite alternate; background: radial-gradient(circle at 50% 50%, #cccccc 0%, #808080 100%); color: #fffacd; border: 3px solid #ffd700; }
+@keyframes moon-neon { 0% { color: #fffacd; border-color: #ffd700; text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff; } 50% { color: #ffffff; border-color: #ffffff; text-shadow: 0 0 20px #ffffff, 0 0 30px #ffcc00; } 100% { color: #fffacd; border-color: #ffd700; text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff; } }
+@keyframes pop { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes shift{0%{background:#ff0000}50%{background:#00ff00}100%{background:#ff0000}}
+@keyframes rainbow{0%{background:#ff0000}16%{background:#ff8c00}33%{background:#ffff00}50%{background:#00ff00}66%{background:#00ffff}83%{background:#8a2be2}100%{background:#ff0000}}
+@keyframes neon{0%,100%{box-shadow:0 0 15px currentColor}50%{box-shadow:0 0 70px currentColor}}
+@keyframes dm{0%,100%{box-shadow:0 0 30px #8A2BE2}50%{box-shadow:0 0 120px #8A2BE2}}
+        
+        .shop-item{
+            background:rgba(255,255,255,0.15);
+            border-radius:15px;
+            padding:20px;
+            text-align:left;
+            transition:all .3s;
+        }
+        .shop-item:hover{transform:translateY(-8px);box-shadow:0 15px 30px rgba(0,0,0,0.5)}
+        .shop-item h3{color:#1e88e5}
+        .shop-item p{font-size:0.95em;margin:8px 0;color:#333}
+        .shop-item .price{font-size:1.3em;color:#4caf50;font-weight:bold}
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div id="auth-screen">
+        <h2>ĐĂNG NHẬP / ĐĂNG KÝ WCL</h2>
+        <p style="color:red; margin-bottom: 10px;">(Lưu ý: Mật khẩu được lưu trữ trên trình duyệt, không an toàn)</p>
+        <input type="text" id="username-input" placeholder="Tên đăng nhập" required>
+        <input type="password" id="password-input" placeholder="Mật khẩu" required>
+        <div class="btn-group">
+            <button id="login-btn" style="background:#007aff;color:#fff;width:auto;" onclick="login()">ĐĂNG NHẬP</button>
+            <button id="register-btn" style="background:#4caf50;color:#fff;width:auto;" onclick="register()">ĐĂNG KÝ</button>
+        </div>
+        <p id="auth-message" style="color:red; margin-top:15px;"></p>
+    </div>
+    <div id="game-content" style="display:none;">
+        <h1 id="welcome-message">WCL GACHA x10</h1>
+        <div style="font-size:1.6em;color:#ffd700;margin-bottom:20px">151 Skin • cố mà farm đủ đi!!!</div>
+        
+        <div class="economy-bar">
+            <span>SMC: <span id="smc">0</span></span>
+            <span>Vòng: <span id="spins">0</span></span>
+            <span>Skin: <span id="owned">0</span>/151</span>
+            <button id="logout-btn" onclick="logout()">ĐĂNG XUẤT</button>
+        </div>
+        <div id="current-skin-display">gacha is here!!!</div>
+        <div class="btn-group">
+            <button id="gacha-x1">QUAY 1 LẦN</button>
+            <button id="gacha-x10">QUAY 10 LẦN</button>
+        </div>
+        <button id="open-inv" class="action-button">INVENTORY</button>
+        <button id="open-shop" class="action-button">SHOP</button>
+        <div id="results" class="results" style="display:none"></div>
+
+        <div id="inventory" style="display:none;margin-top:40px">
+            <h2>BỘ SƯU TẬP SKIN</h2>
+            <div id="inv-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;margin:25px 0"></div>
+            <button id="clear" style="background:#ff2d55;padding:15px 40px;font-size:1.3em;margin-top:20px">XÓA TOÀN BỘ DỮ LIỆU</button>
+        </div>
+
+        <div id="shop" style="display:none;margin-top:40px">
+            <h2>SHOP VIP</h2>
+            <div class="shop-grid" id="shop-items"></div>
+        </div>
+    </div>
+    </div>
+
+<script>
+    // **********************************************
+    // KHU VỰC LOGIC AUTHENTICATION (ĐĂNG NHẬP/KÝ)
+    // **********************************************
+
+    const USER_STORAGE_KEY = 'wcl_users_v2';
+    const CURRENT_USER_KEY = 'wcl_current_user';
+    let currentUser = localStorage.getItem(CURRENT_USER_KEY);
+    let state = {inventory:[], smc:0, spins:0, buffs:{}};
+    let allUsers = {};
+    
+    // Tải dữ liệu người dùng từ LocalStorage
+    try {
+        const usersData = localStorage.getItem(USER_STORAGE_KEY);
+        if(usersData) allUsers = JSON.parse(usersData);
+    } catch(e) { console.log("Không thể tải dữ liệu người dùng."); }
+
+    function saveAllUsers() {
+        localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(allUsers));
+    }
+
+    // Tải trạng thái game của người dùng hiện tại
+    function loadGameState(username) {
+        if (allUsers[username]) {
+            state = allUsers[username].gameState;
+            document.getElementById('welcome-message').textContent = `WCL GACHA x10 - Chào mừng, ${username}!`;
+            document.getElementById('auth-message').textContent = '';
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('game-content').style.display = 'block';
+            updateUI();
+        } else {
+            console.error("User not found during loadGameState.");
+            logout();
+        }
+    }
+
+    // Lưu trạng thái game hiện tại
+    function save() {
+        if (!currentUser) return;
+        allUsers[currentUser].gameState = state;
+        saveAllUsers();
+        updateUI();
+    }
+
+    function login() {
+        const username = document.getElementById('username-input').value.trim();
+        const password = document.getElementById('password-input').value;
+        const msg = document.getElementById('auth-message');
+
+        if (!username || !password) {
+            msg.textContent = 'Vui lòng nhập Tên đăng nhập và Mật khẩu.';
+            return;
+        }
+
+        if (allUsers[username] && allUsers[username].password === password) {
+            currentUser = username;
+            localStorage.setItem(CURRENT_USER_KEY, currentUser);
+            loadGameState(currentUser);
+            // reset input
+            document.getElementById('username-input').value = '';
+            document.getElementById('password-input').value = '';
+        } else {
+            msg.textContent = 'Tên đăng nhập hoặc Mật khẩu không đúng.';
+        }
+    }
+
+    function register() {
+        const username = document.getElementById('username-input').value.trim();
+        const password = document.getElementById('password-input').value;
+        const msg = document.getElementById('auth-message');
+
+        if (!username || !password) {
+            msg.textContent = 'Vui lòng nhập Tên đăng nhập và Mật khẩu.';
+            return;
+        }
+
+        if (allUsers[username]) {
+            msg.textContent = 'Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.';
+            return;
+        }
+
+        // Tạo tài khoản mới với trạng thái game mặc định
+        allUsers[username] = {
+            password: password, // LƯU Ý: Không an toàn, chỉ dùng cho game offline đơn giản
+            gameState: {
+                inventory: [],
+                smc: 0,
+                spins: 0,
+                buffs: {}
+            }
+        };
+
+        saveAllUsers();
+        msg.textContent = 'Đăng ký thành công! Hãy ĐĂNG NHẬP.';
+        document.getElementById('password-input').value = ''; // Xóa mật khẩu sau khi đăng ký
+        document.getElementById('login-btn').click(); // Tự động click đăng nhập sau khi đăng ký
+    }
+
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem(CURRENT_USER_KEY);
+        document.getElementById('auth-screen').style.display = 'block';
+        document.getElementById('game-content').style.display = 'none';
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('inventory').style.display = 'none';
+        document.getElementById('shop').style.display = 'none';
+        document.getElementById('auth-message').textContent = 'Đã đăng xuất.';
+    }
+
+    function initApp() {
+        if (currentUser && allUsers[currentUser]) {
+            loadGameState(currentUser);
+        } else {
+            logout(); // Hiển thị màn hình đăng nhập nếu chưa đăng nhập hoặc user không hợp lệ
+        }
+    }
+
+    // **********************************************
+    // KHU VỰC LOGIC GAME GỐC (ĐƯỢC CHỈNH SỬA)
+    // **********************************************
+
+    const sound = new Audio("https://cdn.freesound.org/previews/612/612345_567446-lq.mp3");
+    sound.volume = 0.4;
+
+    const TIER = {'Dark Matter':11,'Rainbow':10,'Neon':9,'Color-Shift':8,'Titan':7,'Diamond':6,'Platinum':5,'Golden':4,'Silver':3,'Metal':2,'Common':1};
+    const getTierNum = s => {
+        if(!s) return 0;
+        if(typeof s === 'string') return TIER[s] || 0;
+        return TIER[s.tier] || 0;
+    };
+
+    const BASE_RATES = {
+        'Common': 69.9, 'Metal': 18.0,
+        'Silver': 2.0, 'Golden': 1.0,
+        'Platinum': 1.5, 'Diamond': 1.0, 'Titan': 0.5,
+        'Color-Shift': 3.0, 'Neon': 3.0, 'Rainbow': 0.1,
+        'Dark Matter': 0.01
+    };
+
+    const skins = [];
+
+    function add(tier, count, prefix, cls) {
+        for(let i=1; i<=count; i++) {
+            skins.push({name: `${prefix} ${i}`, tier, className: `${cls}-${i}`});
+        }
+    }
+    add('Common',72,'C','skin-common');
+    add('Metal',36,'M','skin-metal');
+    add('Silver',2,'S','skin-silver');
+    add('Golden',2,'G','skin-golden');
+    add('Platinum',10,'PL','skin-platinum');
+    add('Diamond',8,'D','skin-diamond');
+    add('Titan',4,'T','skin-titan');
+    add('Color-Shift',8,'CS','skin-shift');
+    add('Neon',6,'N','skin-neon');
+    add('Rainbow',2,'R','skin-rainbow');
+    add('Dark Matter',1,'DM','skin-darkmatter');
+
+    const shopItems = [
+        {id:'luck_buff',name:'BUFF Tỉ Lệ Hiếm (+4%)',price:50,desc:'Tăng tỉ lệ Titan+ trong 50 vòng',duration:50},
+        {id:'titan_key',name:'Chìa Khóa Titan',price:120,desc:'Nhận 1 skin Titan chưa có'},
+        {id:'rainbow_skin',name:'Skin Rainbow R-2',price:500,desc:'Mua trực tiếp R 2 (giới hạn 1 lần)',once:true},
+        {id:'smc_x2',name:'BUFF x2 SMC',price:80,desc:'Nhân đôi SMC thưởng trong 100 vòng',duration:100},
+        {id:'exp_x2',name:'BUFF x2 EXP/SMC',price:30,desc:'Nhân đôi phần thưởng ngẫu nhiên 50 vòng',duration:50}
+    ];
+
+    function updateUI() {
+        document.getElementById('smc').textContent = state.smc;
+        document.getElementById('spins').textContent = state.spins;
+        document.getElementById('owned').textContent = state.inventory.length;
+    }
+
+    function getRates() {
+        const r = {...BASE_RATES};
+        if(state.buffs.luck_buff && state.spins < state.buffs.luck_buff) {
+            r.Titan += 2.0;
+            r.Diamond += 1.0;
+            r.Rainbow += 0.3;
+            r['Dark Matter'] += 0.05;
+            r.Common -= 3.0;
+            r.Metal -= 0.35;
+        }
+        return r;
+    }
+
+    // HÀM HIỂN THỊ KẾT QUẢ (đơn giản)
+    function showResults(results) {
+        const wrap = document.getElementById('results');
+        wrap.style.display = results.length ? 'grid' : 'none';
+        wrap.innerHTML = '';
+        if(results.length === 0) return;
+
+        // Hiển thị mỗi result
+        results.forEach(r => {
+            const el = document.createElement('div');
+            el.className = `result-item ${r.className}`;
+            el.textContent = r.name + ' (' + r.tier + ')';
+            wrap.appendChild(el);
+        });
+
+        // update current skin display with first result's class
+        const display = document.getElementById('current-skin-display');
+        const first = results[0];
+        if(first) {
+            display.textContent = first.name + ' • ' + first.tier;
+            // remove previous skin-* classes (naive but ok)
+            display.className = '';
+            display.classList.add(first.className);
+        }
+
+        // confetti khi có skin hiếm
+        const rareTiers = ['Titan','Diamond','Rainbow','Dark Matter','Platinum','Golden'];
+        if(results.some(r=> rareTiers.includes(r.tier))) {
+            try { confetti({particleCount:80,spread:80}); } catch(e){/* no confetti lib */} 
+        }
+    }
+
+    // HÀM ROLL (duy nhất, an toàn)
+    function roll(count) {
+        if (!currentUser) { alert('Vui lòng đăng nhập để chơi!'); return; }
+        // prevent negative or 0
+        count = Math.max(1, Math.floor(count)||1);
+
+        // disable buttons quickly (UI)
+        const btn1 = document.getElementById('gacha-x1');
+        const btn10 = document.getElementById('gacha-x10');
+        btn1.disabled = btn10.disabled = true;
+        btn1.classList.add('disabled-btn');
+        btn10.classList.add('disabled-btn');
+
+        // play sound if possible
+        try { sound.currentTime = 0; sound.play(); } catch(e){}
+
+        const rates = getRates();
+        const results = [];
+
+        for (let i = 0; i < count; i++) {
+            state.spins += 1; // mỗi lần quay tăng spin một đơn vị
+            const rollValue = Math.random() * 100;
+            let cumulativeRate = 0;
+            let pulledSkin = null;
+
+            for (const tierName in rates) {
+                cumulativeRate += rates[tierName];
+                if (rollValue < cumulativeRate) {
+                    const availableSkins = skins.filter(s => s.tier === tierName);
+                    pulledSkin = availableSkins[Math.floor(Math.random() * availableSkins.length)];
+                    break;
+                }
+            }
+
+            if (pulledSkin) {
+                results.push(pulledSkin);
+                const skinName = pulledSkin.name;
+                if (!state.inventory.includes(skinName)) {
+                    state.inventory.push(skinName);
+                }
+
+                // thưởng SMC cơ bản theo tier
+                const tierNum = getTierNum(pulledSkin);
+                let rewardSMC = 0;
+                if (tierNum >= 11) { rewardSMC = 1000; } 
+                else if (tierNum >= 10) { rewardSMC = 200; } 
+                else if (tierNum >= 9) { rewardSMC = 50; } 
+                else if (tierNum >= 8) { rewardSMC = 20; } 
+                else if (tierNum >= 7) { rewardSMC = 5; }
+
+                // buffs
+                if (state.buffs && state.buffs.smc_x2 && state.spins <= state.buffs.smc_x2) {
+                    rewardSMC *= 2;
+                }
+                if (state.buffs && state.buffs.exp_x2 && state.spins <= state.buffs.exp_x2) {
+                    if (Math.random() < 0.5) { rewardSMC *= 2; } 
+                }
+
+                state.smc += rewardSMC;
+            }
+        }
+
+        save();
+
+        // re-enable after animation-ish time
+        setTimeout(() => {
+            btn1.disabled = btn10.disabled = false;
+            btn1.classList.remove('disabled-btn');
+            btn10.classList.remove('disabled-btn');
+        }, 800);
+
+        showResults(results);
+    }
+
+    // SHOP RENDER
+    function renderShop() {
+        const container = document.getElementById('shop-items');
+        container.innerHTML = '';
+        shopItems.forEach(item => {
+            const bought = item.once && state.buffs[item.id];
+            const active = item.duration && state.buffs[item.id] && state.spins <= state.buffs[item.id];
+            const remaining = active ? state.buffs[item.id] - state.spins : 0;
+            const disabled = state.smc < item.price || bought;
+
+            const div = document.createElement('div');
+            div.className = 'shop-item';
+            div.innerHTML = `
+                <h3>${item.name} ${active ? `<small style="color:#0f0">(${remaining} vòng)</small>` : ''}</h3>
+                <p>${item.desc}</p>
+                <p class="price">${item.price} SMC</p>
+                <button class="buy-btn ${disabled?'disabled-btn':''}" ${disabled?'disabled':''} data-id="${item.id}">
+                    ${bought ? 'ĐÃ MUA' : state.smc < item.price ? 'KHÔNG ĐỦ' : 'MUA NGAY'}
+                </button>
+            `;
+            container.appendChild(div);
+        });
+
+        document.querySelectorAll('#shop .buy-btn:not(.disabled-btn)').forEach(btn => {
+            btn.onclick = () => buyItem(btn.dataset.id);
+        });
+    }
+
+    function buyItem(id) {
+        const item = shopItems.find(x => x.id === id);
+        if(!item) return;
+        if(state.smc < item.price) return;
+        state.smc -= item.price;
+
+        if(item.once) {
+            if(id === 'rainbow_skin') {
+                const r2 = skins.find(s => s.name === 'R 2');
+                if(r2 && !state.inventory.includes('R 2')) state.inventory.push('R 2');
+            }
+            state.buffs[id] = true;
+        } else if(id === 'titan_key') {
+            const avail = skins.filter(s => s.tier==='Titan' && !state.inventory.includes(s.name));
+            if(avail.length > 0) {
+                const chosen = avail[Math.floor(Math.random()*avail.length)];
+                state.inventory.push(chosen.name);
+                alert('Nhận được: ' + chosen.name);
+            } else {
+                alert('Bạn đã sở hữu hết Titan rồi!');
+                state.smc += item.price;
+            }
+        } else if(item.duration) {
+            const end = state.spins + item.duration;
+            state.buffs[id] = Math.max(state.buffs[id]||0, end);
+        }
+
+        save();
+        renderShop();
+    }
+
+    // BUTTON HANDLERS
+    document.getElementById('gacha-x1').onclick = () => roll(1);
+    document.getElementById('gacha-x10').onclick = () => roll(10);
+
+    document.getElementById('open-inv').onclick = () => {
+        document.getElementById('inventory').style.display = 'block';
+        document.getElementById('shop').style.display = 'none';
+        const list = document.getElementById('inv-list');
+        list.innerHTML = '';
+        skins
+            .filter(s => state.inventory.includes(s.name))
+            .sort((a,b) => getTierNum(b) - getTierNum(a))
+            .forEach(s => {
+                const el = document.createElement('div');
+                el.className = `result-item ${s.className}`;
+                el.textContent = s.name;
+                list.appendChild(el);
+            });
+    };
+
+    document.getElementById('open-shop').onclick = () => {
+        document.getElementById('shop').style.display = 'block';
+        document.getElementById('inventory').style.display = 'none';
+        renderShop();
+    };
+
+    document.getElementById('clear').onclick = () => {
+        if (!currentUser) return;
+        if(confirm(`XÓA HẾT DỮ LIỆU GAME CỦA TÀI KHOẢN ${currentUser} THẬT CHỨ?`)) {
+            // Xóa game state của người dùng hiện tại
+            allUsers[currentUser].gameState = {inventory:[], smc:0, spins:0, buffs:{}};
+            saveAllUsers(); 
+            // Cập nhật giao diện
+            loadGameState(currentUser);
+            // Ẩn các khu vực phụ
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('inventory').style.display = 'none';
+            document.getElementById('shop').style.display = 'none';
+            alert('Đã xóa dữ liệu game thành công!');
+        }
+    };
+    
+    // Khởi tạo ứng dụng sau khi tất cả logic được định nghĩa
+    initApp();
+</script>
+</body>
+</html>
