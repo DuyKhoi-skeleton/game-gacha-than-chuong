@@ -691,16 +691,34 @@
         /* ------------------------------------------------------------------- */
         /* TIER 10: RAINBOW (R) - 2 SKINS - HIỆU ỨNG CẦU VỒNG */
         /* ------------------------------------------------------------------- */
-        .skin-rainbow-1,
-            color: #fff;
-            border: 5px solid #fff;
-            animation: rainbow 6s linear infinite;
-            /* Không cần đặt background vì animation rainbow tự làm màu */
-        }
-           .skin-rainbow-2 {
-           color: #fff;
-           border: 5px solid #fff;
-           animation: rainbow_reverse 6s linear infinite;
+        .skin-rainbow-1 { 
+    color: #fff; 
+    border: 5px solid #fff; 
+    animation: rainbow 6s linear infinite; /* Sử dụng Keyframe xuôi */
+}
+.skin-rainbow-2 { 
+    color: #fff; 
+    border: 5px solid #fff; 
+    animation: rainbow_reverse 6s linear infinite; /* Sử dụng Keyframe ngược */
+}
+@keyframes rainbow{
+    0%{background:#ff0000}    /* Đỏ */
+    16%{background:#ff8c00}   /* Cam */
+    33%{background:#ffff00}   /* Vàng */
+    50%{background:#00ff00}   /* Xanh lá */
+    66%{background:#00ffff}   /* Xanh Cyan */
+    83%{background:#8a2be2}   /* Tím */
+    100%{background:#ff0000}  /* Quay lại Đỏ */
+}
+@keyframes rainbow_reverse {
+    0% { background: #8a2be2; }  /* Tím */
+    16% { background: #00ffff; } /* Xanh Cyan */
+    33% { background: #00ff00; } /* Xanh lá */
+    50% { background: #ffff00; } /* Vàng */
+    66% { background: #ff8c00; } /* Cam */
+    83% { background: #ff0000; } /* Đỏ */
+    100% { background: #8a2be2; } /* Quay lại Tím */
+}
         /* ------------------------------------------------------------------- */
         /* TIER 11: DARK MATTER (DM) - 1 SKIN - TỐI THƯỢNG */
         /* ------------------------------------------------------------------- */
