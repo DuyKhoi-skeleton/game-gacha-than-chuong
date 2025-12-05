@@ -25,7 +25,151 @@
             width:100%;
             box-shadow:0 25px 70px rgba(0,0,0,0.7);
             text-align:center;
+            position: relative;
         }
+        
+        /* Login/Register Form Styles */
+        #login-form, #register-form {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            text-align: center;
+            display: none;
+        }
+        
+        #login-form.active, #register-form.active {
+            display: block;
+        }
+        
+        .form-title {
+            font-size: 2.5em;
+            color: #1e88e5;
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, #1e88e5, #0d47a1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
+            outline: none;
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .form-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 150px;
+        }
+        
+        .login-btn {
+            background: #1e88e5;
+            color: white;
+        }
+        
+        .register-btn {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .switch-form-btn {
+            background: transparent;
+            color: #1e88e5;
+            text-decoration: underline;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+        }
+        
+        .error-message {
+            color: #ff2d55;
+            margin-top: 5px;
+            font-size: 0.9em;
+            display: none;
+        }
+        
+        /* User Info Bar */
+        .user-info-bar {
+            background: linear-gradient(90deg, #1e88e5, #0d47a1);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .user-action-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        
+        .user-action-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Main content visibility */
+        #main-content {
+            display: none;
+        }
+        
+        #main-content.active {
+            display: block;
+        }
+        
         h1{
             font-size:3.5em;
             background:linear-gradient(90deg,#ff00c8,#ffd000,#00ff9d,#ff00c8);
@@ -547,32 +691,16 @@
         /* ------------------------------------------------------------------- */
         /* TIER 10: RAINBOW (R) - 2 SKINS - HIỆU ỨNG CẦU VỒNG */
         /* ------------------------------------------------------------------- */
-        .skin-rainbow-1 { /* R1: QUAY LẠI MÀU BÌNH THƯỜNG (Đỏ -> Tím) */
+        .skin-rainbow-1,
             color: #fff;
             border: 5px solid #fff;
-            animation: rainbow 6s linear infinite; /* Animation gốc */
+            animation: rainbow 6s linear infinite;
+            /* Không cần đặt background vì animation rainbow tự làm màu */
         }
-        .skin-rainbow-2 { /* R2: ĐẢO NGƯỢC MÀU (Tím -> Đỏ) theo yêu cầu */
-            color: #fff;
-            border: 5px solid #fff;
-            animation: rainbow_reverse 6s linear infinite; /* Animation đảo ngược */
-        }
-
-        /* ... các style khác ... */
-
-        /* Định nghĩa animation đảo ngược (Tím, Chàm, Lam, Lục, Vàng, Cam, Đỏ) */
-        @keyframes rainbow_reverse{
-            0%{background:#8a2be2} /* Tím/Chàm */
-            16%{background:#00ffff} /* Lam */
-            33%{background:#00ff00} /* Lục */
-            50%{background:#ffff00} /* Vàng */
-            66%{background:#ff8c00} /* Cam */
-            83%{background:#ff0000} /* Đỏ */
-            100%{background:#8a2be2} /* Quay lại Tím/Chàm */
-        }
-        
-        /* Định nghĩa animation gốc (Đỏ, Cam, Vàng, Lục, Lam, Chàm, Tím) */
-        @keyframes rainbow{0%{background:#ff0000}16%{background:#ff8c00}33%{background:#ffff00}50%{background:#00ff00}66%{background:#00ffff}83%{background:#8a2be2}100%{background:#ff0000}}
+           .skin-rainbow-2 {
+           color: #fff;
+           border: 5px solid #fff;
+           animation: rainbow_reverse 6s linear infinite;
         /* ------------------------------------------------------------------- */
         /* TIER 11: DARK MATTER (DM) - 1 SKIN - TỐI THƯỢNG */
         /* ------------------------------------------------------------------- */
@@ -583,58 +711,36 @@
             animation:dm 4s infinite;
             box-shadow:0 0 70px #8A2BE2
         }
-        
-        /* ------------------------------------------------------------------- */
-        /* TIER 12: MOON (M) - 1 SKIN - SIÊU HIẾM (CẬP NHẬT) */
-        /* ------------------------------------------------------------------- */
-        .result-item.moon-neon-skin, #current-skin-display.moon-neon-skin {
-            /* Animation Vàng-Trắng-Vàng 3s */
-            animation: moon-neon 3s ease-in-out infinite alternate;
-            
-            /* Màu nền giả lập bề mặt mặt trăng (Khoa học Trái Đất/Không gian!) */
-            background: radial-gradient(circle at 50% 50%, #cccccc 0%, #808080 100%);
-            
-            /* Thiết lập chữ và border ban đầu */
-            color: #fffacd; /* Vàng kem */
-            border: 3px solid #ffd700; 
-            /* Thêm box-shadow ban đầu để hiệu ứng glow rõ ràng hơn */
-            box-shadow: 0 0 15px #ffd700;
-        }
+.moon-neon-skin {
+    /* Animation Vàng-Trắng-Vàng 3s */
+    animation: moon-neon 3s ease-in-out infinite alternate;
+    
+    /* Màu nền giả lập bề mặt mặt trăng */
+    background: radial-gradient(circle at 50% 50%, #cccccc 0%, #808080 100%);
+    
+    /* Thiết lập chữ và border ban đầu */
+    color: #fffacd; /* Vàng kem */
+    border: 3px solid #ffd700; 
+}
 
-        /* (Phần lớn CSS skin giữ nguyên - mình không thay đổi nữa để khỏi phá giao diện) */
-       
-        @keyframes pop { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
-        @keyframes shift{0%{background:#ff0000}50%{background:#00ff00}100%{background:#ff0000}}
-        @keyframes rainbow{0%{background:#ff0000}16%{background:#ff8c00}33%{background:#ffff00}50%{background:#00ff00}66%{background:#00ffff}83%{background:#8a2be2}100%{background:#ff0000}}
-        @keyframes neon{0%,100%{box-shadow:0 0 15px currentColor}50%{box-shadow:0 0 70px currentColor}}
-        @keyframes dm{0%,100%{box-shadow:0 0 30px #8A2BE2}50%{box-shadow:0 0 120px #8A2BE2}}
+@keyframes moon-neon {
+    0% { 
+        color: #fffacd; /* Vàng kem nhạt */
+        border-color: #ffd700; /* Vàng Gold */
+        text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff; /* Bóng vàng nhạt */
+    }
+    50% { 
+        color: #ffffff; /* Trắng tinh khiết */
+        border-color: #ffffff; /* Trắng sáng */
+        text-shadow: 0 0 20px #ffffff, 0 0 30px #ffcc00; /* Bóng trắng sáng nhất */
+    }
+    100% { 
+        color: #fffacd; /* Quay lại vàng kem */
+        border-color: #ffd700;
+        text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff;
+    }
+}
 
-        /* KEYFRAMES CHO MOON NEON (Mới) */
-        @keyframes moon-neon {
-            0% { 
-                color: #fffacd; /* Vàng kem nhạt */
-                border-color: #ffd700; /* Vàng Gold */
-                text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff; /* Bóng vàng nhạt */
-            }
-            50% { 
-                color: #ffffff; /* Trắng tinh khiết */
-                border-color: #ffffff; /* Trắng sáng */
-                text-shadow: 0 0 20px #ffffff, 0 0 30px #ffcc00; /* Bóng trắng sáng nhất */
-            }
-            100% { 
-                color: #fffacd; /* Quay lại vàng kem */
-                border-color: #ffd700;
-                text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffffff;
-            }
-        }
-        
-        .shop-item{
-            background:rgba(255,255,255,0.15);
-            border-radius:15px;
-            padding:20px;
-            text-align:left;
-            transition:all .3s;
-        }
         .shop-item:hover{transform:translateY(-8px);box-shadow:0 15px 30px rgba(0,0,0,0.5)}
         .shop-item h3{color:#1e88e5}
         .shop-item p{font-size:0.95em;margin:8px 0;color:#333}
@@ -643,41 +749,347 @@
 </head>
 <body>
 <div class="container">
-    <h1>WCL GACHA x10</h1>
-    <div style="font-size:1.6em;color:#ffd700;margin-bottom:20px">152 Skin • cố mà farm đủ đi!!!</div>
-   
-    <div class="economy-bar">
-        <span>SMC: <span id="smc">0</span></span>
-        <span>Vòng: <span id="spins">0</span></span>
-        <span>Skin: <span id="owned">0</span>/152</span>
-    </div>
-    <div id="current-skin-display">gacha is here!!!</div>
-    <div class="btn-group">
-        <button id="gacha-x1">QUAY 1 LẦN</button>
-        <button id="gacha-x10">QUAY 10 LẦN</button>
-    </div>
-    <button id="open-inv" class="action-button">INVENTORY</button>
-    <button id="open-shop" class="action-button">SHOP</button>
-    <div id="results" class="results" style="display:none"></div>
-
-    <div id="inventory" style="display:none;margin-top:40px">
-        <h2>BỘ SƯU TẬP SKIN</h2>
-        <div id="inv-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;margin:25px 0"></div>
-        <button id="clear" style="background:#ff2d55;padding:15px 40px;font-size:1.3em;margin-top:20px">XÓA TOÀN BỘ DỮ LIỆU</button>
+    <!-- Login Form -->
+    <div id="login-form" class="active">
+        <h2 class="form-title">ĐĂNG NHẬP</h2>
+        <div class="form-group">
+            <label for="login-username">Tên đăng nhập</label>
+            <input type="text" id="login-username" placeholder="Nhập tên đăng nhập">
+            <div class="error-message" id="login-username-error"></div>
+        </div>
+        <div class="form-group">
+            <label for="login-password">Mật khẩu</label>
+            <input type="password" id="login-password" placeholder="Nhập mật khẩu">
+            <div class="error-message" id="login-password-error"></div>
+        </div>
+        <div class="form-buttons">
+            <button class="form-btn login-btn" id="login-submit">ĐĂNG NHẬP</button>
+            <button class="form-btn register-btn" id="show-register">ĐĂNG KÝ TÀI KHOẢN</button>
+        </div>
+        <button class="switch-form-btn" id="guest-login">Chơi với tài khoản khách</button>
     </div>
 
-    <div id="shop" style="display:none;margin-top:40px">
-        <h2>SHOP VIP</h2>
-        <div class="shop-grid" id="shop-items"></div>
+    <!-- Register Form -->
+    <div id="register-form">
+        <h2 class="form-title">ĐĂNG KÝ TÀI KHOẢN</h2>
+        <div class="form-group">
+            <label for="register-username">Tên đăng nhập</label>
+            <input type="text" id="register-username" placeholder="Từ 3-20 ký tự">
+            <div class="error-message" id="register-username-error"></div>
+        </div>
+        <div class="form-group">
+            <label for="register-password">Mật khẩu</label>
+            <input type="password" id="register-password" placeholder="Ít nhất 6 ký tự">
+            <div class="error-message" id="register-password-error"></div>
+        </div>
+        <div class="form-group">
+            <label for="register-confirm-password">Xác nhận mật khẩu</label>
+            <input type="password" id="register-confirm-password" placeholder="Nhập lại mật khẩu">
+            <div class="error-message" id="register-confirm-error"></div>
+        </div>
+        <div class="form-buttons">
+            <button class="form-btn register-btn" id="register-submit">ĐĂNG KÝ</button>
+            <button class="form-btn login-btn" id="show-login">QUAY LẠI ĐĂNG NHẬP</button>
+        </div>
+    </div>
+
+    <!-- Main Game Content -->
+    <div id="main-content">
+        <!-- User Info Bar -->
+        <div class="user-info-bar">
+            <div class="user-info">
+                <span id="logged-user">Chào bạn!</span>
+            </div>
+            <div class="user-actions">
+                <button class="user-action-btn" id="change-password-btn">Đổi mật khẩu</button>
+                <button class="user-action-btn" id="logout-btn">Đăng xuất</button>
+            </div>
+        </div>
+
+        <h1>WCL GACHA x10</h1>
+        <div style="font-size:1.6em;color:#ffd700;margin-bottom:20px">152 Skin • cố mà farm đủ đi!!!</div>
+       
+        <div class="economy-bar">
+            <span>SMC: <span id="smc">0</span></span>
+            <span>Vòng: <span id="spins">0</span></span>
+            <span>Skin: <span id="owned">0</span>/152</span>
+        </div>
+        <div id="current-skin-display">gacha is here!!!</div>
+        <div class="btn-group">
+            <button id="gacha-x1">QUAY 1 LẦN</button>
+            <button id="gacha-x10">QUAY 10 LẦN</button>
+        </div>
+        <button id="open-inv" class="action-button">INVENTORY</button>
+        <button id="open-shop" class="action-button">SHOP</button>
+        <div id="results" class="results" style="display:none"></div>
+
+        <div id="inventory" style="display:none;margin-top:40px">
+            <h2>BỘ SƯU TẬP SKIN</h2>
+            <div id="inv-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;margin:25px 0"></div>
+            <button id="clear" style="background:#ff2d55;padding:15px 40px;font-size:1.3em;margin-top:20px">XÓA TOÀN BỘ DỮ LIỆU</button>
+        </div>
+
+        <div id="shop" style="display:none;margin-top:40px">
+            <h2>SHOP VIP</h2>
+            <div class="shop-grid" id="shop-items"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div id="change-password-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;justify-content:center;align-items:center;">
+    <div style="background:white;padding:40px;border-radius:20px;max-width:500px;width:90%;">
+        <h2 style="color:#1e88e5;margin-bottom:25px;">ĐỔI MẬT KHẨU</h2>
+        <div class="form-group">
+            <label for="current-password">Mật khẩu hiện tại</label>
+            <input type="password" id="current-password" placeholder="Nhập mật khẩu hiện tại">
+            <div class="error-message" id="current-password-error"></div>
+        </div>
+        <div class="form-group">
+            <label for="new-password">Mật khẩu mới</label>
+            <input type="password" id="new-password" placeholder="Ít nhất 6 ký tự">
+            <div class="error-message" id="new-password-error"></div>
+        </div>
+        <div class="form-group">
+            <label for="confirm-new-password">Xác nhận mật khẩu mới</label>
+            <input type="password" id="confirm-new-password" placeholder="Nhập lại mật khẩu mới">
+            <div class="error-message" id="confirm-new-error"></div>
+        </div>
+        <div style="display:flex;gap:15px;margin-top:25px;">
+            <button class="form-btn login-btn" id="submit-change-password">ĐỔI MẬT KHẨU</button>
+            <button class="form-btn" style="background:#666;color:white;" id="cancel-change-password">HỦY</button>
+        </div>
     </div>
 </div>
 
 <script>
-    // âm thanh (có thể bị trình duyệt chặn autoplay nếu chưa tương tác)
-    const sound = new Audio("https://cdn.freesound.org/previews/612/612345_567446-lq.mp3");
-    sound.volume = 0.4;
-
-    // CẬP NHẬT: Thêm Tier 'Moon' (Tier 12)
+    // Hệ thống tài khoản
+    const ACCOUNTS_KEY = 'wcl_gacha_accounts';
+    const CURRENT_USER_KEY = 'wcl_current_user';
+    
+    // Khởi tạo dữ liệu tài khoản nếu chưa có
+    if (!localStorage.getItem(ACCOUNTS_KEY)) {
+        localStorage.setItem(ACCOUNTS_KEY, JSON.stringify({}));
+    }
+    
+    // Lấy danh sách tài khoản
+    function getAccounts() {
+        return JSON.parse(localStorage.getItem(ACCOUNTS_KEY) || '{}');
+    }
+    
+    // Lưu tài khoản
+    function saveAccounts(accounts) {
+        localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
+    }
+    
+    // Lấy người dùng hiện tại
+    function getCurrentUser() {
+        return localStorage.getItem(CURRENT_USER_KEY);
+    }
+    
+    // Lưu người dùng hiện tại
+    function setCurrentUser(username) {
+        if (username) {
+            localStorage.setItem(CURRENT_USER_KEY, username);
+        } else {
+            localStorage.removeItem(CURRENT_USER_KEY);
+        }
+    }
+    
+    // Lấy dữ liệu game của người dùng
+    function getUserData(username) {
+        const key = `wcl_user_data_${username}`;
+        const defaultData = {
+            inventory: [],
+            smc: 0,
+            spins: 0,
+            buffs: {}
+        };
+        
+        try {
+            const saved = localStorage.getItem(key);
+            return saved ? JSON.parse(saved) : defaultData;
+        } catch(e) {
+            return defaultData;
+        }
+    }
+    
+    // Lưu dữ liệu game của người dùng
+    function saveUserData(username, data) {
+        const key = `wcl_user_data_${username}`;
+        localStorage.setItem(key, JSON.stringify(data));
+    }
+    
+    // State toàn cục
+    let state = {
+        inventory: [],
+        smc: 0,
+        spins: 0,
+        buffs: {},
+        currentUser: null
+    };
+    
+    // Khởi tạo game state từ người dùng hiện tại
+    function initGameState() {
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            const userData = getUserData(currentUser);
+            state = {
+                ...state,
+                ...userData,
+                currentUser: currentUser
+            };
+            showMainContent(currentUser);
+        } else {
+            showLoginForm();
+        }
+    }
+    
+    // Hiển thị form đăng nhập
+    function showLoginForm() {
+        document.getElementById('login-form').classList.add('active');
+        document.getElementById('register-form').classList.remove('active');
+        document.getElementById('main-content').classList.remove('active');
+    }
+    
+    // Hiển thị form đăng ký
+    function showRegisterForm() {
+        document.getElementById('login-form').classList.remove('active');
+        document.getElementById('register-form').classList.add('active');
+    }
+    
+    // Hiển thị nội dung game chính
+    function showMainContent(username) {
+        document.getElementById('login-form').classList.remove('active');
+        document.getElementById('register-form').classList.remove('active');
+        document.getElementById('main-content').classList.add('active');
+        document.getElementById('logged-user').textContent = `Xin chào, ${username}!`;
+        updateUI();
+    }
+    
+    // Xử lý đăng nhập
+    function handleLogin(username, password) {
+        const accounts = getAccounts();
+        
+        // Kiểm tra tài khoản
+        if (!accounts[username]) {
+            showError('login-username-error', 'Tài khoản không tồn tại');
+            return false;
+        }
+        
+        if (accounts[username] !== password) {
+            showError('login-password-error', 'Mật khẩu không đúng');
+            return false;
+        }
+        
+        // Đăng nhập thành công
+        setCurrentUser(username);
+        initGameState();
+        return true;
+    }
+    
+    // Xử lý đăng ký
+    function handleRegister(username, password) {
+        const accounts = getAccounts();
+        
+        // Kiểm tra tên đăng nhập
+        if (username.length < 3 || username.length > 20) {
+            showError('register-username-error', 'Tên đăng nhập phải từ 3-20 ký tự');
+            return false;
+        }
+        
+        if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+            showError('register-username-error', 'Tên đăng nhập chỉ được chứa chữ cái, số và dấu gạch dưới');
+            return false;
+        }
+        
+        if (accounts[username]) {
+            showError('register-username-error', 'Tên đăng nhập đã tồn tại');
+            return false;
+        }
+        
+        // Kiểm tra mật khẩu
+        if (password.length < 6) {
+            showError('register-password-error', 'Mật khẩu phải có ít nhất 6 ký tự');
+            return false;
+        }
+        
+        // Đăng ký thành công
+        accounts[username] = password;
+        saveAccounts(accounts);
+        
+        // Tạo dữ liệu game mặc định cho user mới
+        saveUserData(username, {
+            inventory: [],
+            smc: 0,
+            spins: 0,
+            buffs: {}
+        });
+        
+        // Tự động đăng nhập
+        setCurrentUser(username);
+        initGameState();
+        return true;
+    }
+    
+    // Xử lý đổi mật khẩu
+    function handleChangePassword(currentPassword, newPassword, confirmPassword) {
+        const username = getCurrentUser();
+        const accounts = getAccounts();
+        
+        // Kiểm tra mật khẩu hiện tại
+        if (accounts[username] !== currentPassword) {
+            showError('current-password-error', 'Mật khẩu hiện tại không đúng');
+            return false;
+        }
+        
+        // Kiểm tra mật khẩu mới
+        if (newPassword.length < 6) {
+            showError('new-password-error', 'Mật khẩu mới phải có ít nhất 6 ký tự');
+            return false;
+        }
+        
+        if (newPassword !== confirmPassword) {
+            showError('confirm-new-error', 'Mật khẩu xác nhận không khớp');
+            return false;
+        }
+        
+        // Cập nhật mật khẩu
+        accounts[username] = newPassword;
+        saveAccounts(accounts);
+        return true;
+    }
+    
+    // Hiển thị lỗi
+    function showError(elementId, message) {
+        const element = document.getElementById(elementId);
+        element.textContent = message;
+        element.style.display = 'block';
+    }
+    
+    // Ẩn tất cả lỗi
+    function clearErrors() {
+        document.querySelectorAll('.error-message').forEach(el => {
+            el.style.display = 'none';
+        });
+    }
+    
+    // Lưu game state
+    function save() {
+        if (state.currentUser) {
+            saveUserData(state.currentUser, {
+                inventory: state.inventory,
+                smc: state.smc,
+                spins: state.spins,
+                buffs: state.buffs
+            });
+        }
+        updateUI();
+    }
+    
+    // Các phần còn lại của game logic (giữ nguyên từ code cũ)
+    // ... (các hàm roll, updateUI, showResults, renderShop, buyItem, v.v.)
+    
     const TIER = {'Moon':12,'Dark Matter':11,'Rainbow':10,'Neon':9,'Color-Shift':8,'Titan':7,'Diamond':6,'Platinum':5,'Golden':4,'Silver':3,'Metal':2,'Common':1};
     const getTierNum = s => {
         if(!s) return 0;
@@ -685,24 +1097,16 @@
         return TIER[s.tier] || 0;
     };
 
-    // CẬP NHẬT: Thêm Tỉ Lệ 'Moon' và điều chỉnh Common
     const BASE_RATES = {
-        'Common': 69.895, 'Metal': 18.0, // Đã giảm Common 0.005
+        'Common': 69.895, 'Metal': 18.0,
         'Silver': 2.0, 'Golden': 1.0,
         'Platinum': 1.5, 'Diamond': 1.0, 'Titan': 0.5,
         'Color-Shift': 3.0, 'Neon': 3.0, 'Rainbow': 0.1,
         'Dark Matter': 0.01,
-        'Moon': 0.005 // Tỉ lệ siêu hiếm
+        'Moon': 0.005
     };
 
     const skins = [];
-    let state = {inventory:[],smc:0,spins:0,buffs:{}};
-
-    try {
-        const saved = localStorage.getItem('wcl_final_v2');
-        if(saved) state = JSON.parse(saved);
-    } catch(e) { console.log("Reset data"); }
-
     function add(tier, count, prefix, cls) {
         for(let i=1; i<=count; i++) {
             skins.push({name: `${prefix} ${i}`, tier, className: `${cls}-${i}`});
@@ -719,7 +1123,6 @@
     add('Neon',6,'N','skin-neon');
     add('Rainbow',2,'R','skin-rainbow');
     add('Dark Matter',1,'DM','skin-darkmatter');
-    // CẬP NHẬT: Thêm Skin Moon Neon
     skins.push({name: 'Moon Neon 1', tier: 'Moon', className: 'moon-neon-skin'});
 
     const shopItems = [
@@ -730,16 +1133,10 @@
         {id:'exp_x2',name:'BUFF x2 EXP/SMC',price:30,desc:'Nhân đôi phần thưởng ngẫu nhiên 50 vòng',duration:50}
     ];
 
-    function save() {
-        localStorage.setItem('wcl_final_v2', JSON.stringify(state));
-        updateUI();
-    }
-
     function updateUI() {
         document.getElementById('smc').textContent = state.smc;
         document.getElementById('spins').textContent = state.spins;
         document.getElementById('owned').textContent = state.inventory.length;
-        // Cập nhật tổng số skin
         document.querySelector('.economy-bar span:nth-child(3)').innerHTML = `Skin: <span id="owned">${state.inventory.length}</span>/${skins.length}`;
     }
 
@@ -750,21 +1147,22 @@
             r.Diamond += 1.0;
             r.Rainbow += 0.3;
             r['Dark Matter'] += 0.05;
-            r.Moon += 0.005; // Tăng thêm tỉ lệ Moon
+            r.Moon += 0.005;
             r.Common -= 3.0;
-            r.Metal -= 0.355; // Điều chỉnh giảm Metal thêm 0.005
+            r.Metal -= 0.355;
         }
         return r;
     }
 
-    // HÀM HIỂN THỊ KẾT QUẢ (đơn giản)
+    const sound = new Audio("https://cdn.freesound.org/previews/612/612345_567446-lq.mp3");
+    sound.volume = 0.4;
+
     function showResults(results) {
         const wrap = document.getElementById('results');
         wrap.style.display = results.length ? 'grid' : 'none';
         wrap.innerHTML = '';
         if(results.length === 0) return;
 
-        // Hiển thị mỗi result
         results.forEach(r => {
             const el = document.createElement('div');
             el.className = `result-item ${r.className}`;
@@ -772,43 +1170,36 @@
             wrap.appendChild(el);
         });
 
-        // update current skin display with first result's class
         const display = document.getElementById('current-skin-display');
         const first = results[0];
         if(first) {
             display.textContent = first.name + ' • ' + first.tier;
-            // remove previous skin-* classes (naive but ok)
             display.className = '';
             display.classList.add(first.className);
         }
 
-        // confetti khi có skin hiếm
         const rareTiers = ['Titan','Diamond','Rainbow','Dark Matter','Platinum','Golden','Moon'];
         if(results.some(r=> rareTiers.includes(r.tier))) {
-            try { confetti({particleCount:80,spread:80}); } catch(e){/* no confetti lib */} 
+            try { confetti({particleCount:80,spread:80}); } catch(e){}
         }
     }
 
-    // HÀM ROLL (duy nhất, an toàn)
     function roll(count) {
-        // prevent negative or 0
         count = Math.max(1, Math.floor(count)||1);
 
-        // disable buttons quickly (UI)
         const btn1 = document.getElementById('gacha-x1');
         const btn10 = document.getElementById('gacha-x10');
         btn1.disabled = btn10.disabled = true;
         btn1.classList.add('disabled-btn');
         btn10.classList.add('disabled-btn');
 
-        // play sound if possible
         try { sound.currentTime = 0; sound.play(); } catch(e){}
 
         const rates = getRates();
         const results = [];
 
         for (let i = 0; i < count; i++) {
-            state.spins += 1; // mỗi lần quay tăng spin một đơn vị
+            state.spins += 1;
             const rollValue = Math.random() * 100;
             let cumulativeRate = 0;
             let pulledSkin = null;
@@ -829,17 +1220,15 @@
                     state.inventory.push(skinName);
                 }
 
-                // thưởng SMC cơ bản theo tier
                 const tierNum = getTierNum(pulledSkin);
                 let rewardSMC = 0;
-                if (tierNum >= 12) { rewardSMC = 2500; } // Moon: SMC thưởng cao nhất
+                if (tierNum >= 12) { rewardSMC = 2500; }
                 else if (tierNum >= 11) { rewardSMC = 1000; } 
                 else if (tierNum >= 10) { rewardSMC = 200; } 
                 else if (tierNum >= 9) { rewardSMC = 50; } 
                 else if (tierNum >= 8) { rewardSMC = 20; } 
                 else if (tierNum >= 7) { rewardSMC = 5; }
 
-                // buffs
                 if (state.buffs && state.buffs.smc_x2 && state.spins <= state.buffs.smc_x2) {
                     rewardSMC *= 2;
                 }
@@ -853,7 +1242,6 @@
 
         save();
 
-        // re-enable after animation-ish time
         setTimeout(() => {
             btn1.disabled = btn10.disabled = false;
             btn1.classList.remove('disabled-btn');
@@ -863,7 +1251,6 @@
         showResults(results);
     }
 
-    // SHOP RENDER
     function renderShop() {
         const container = document.getElementById('shop-items');
         container.innerHTML = '';
@@ -922,7 +1309,119 @@
         renderShop();
     }
 
-    // BUTTON HANDLERS
+    // Event Listeners cho đăng nhập/đăng ký
+    document.getElementById('login-submit').onclick = () => {
+        clearErrors();
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value;
+        
+        if (!username) {
+            showError('login-username-error', 'Vui lòng nhập tên đăng nhập');
+            return;
+        }
+        
+        if (!password) {
+            showError('login-password-error', 'Vui lòng nhập mật khẩu');
+            return;
+        }
+        
+        handleLogin(username, password);
+    };
+    
+    document.getElementById('register-submit').onclick = () => {
+        clearErrors();
+        const username = document.getElementById('register-username').value.trim();
+        const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('register-confirm-password').value;
+        
+        if (!username) {
+            showError('register-username-error', 'Vui lòng nhập tên đăng nhập');
+            return;
+        }
+        
+        if (!password) {
+            showError('register-password-error', 'Vui lòng nhập mật khẩu');
+            return;
+        }
+        
+        if (password !== confirmPassword) {
+            showError('register-confirm-error', 'Mật khẩu xác nhận không khớp');
+            return;
+        }
+        
+        handleRegister(username, password);
+    };
+    
+    document.getElementById('show-register').onclick = () => {
+        clearErrors();
+        showRegisterForm();
+    };
+    
+    document.getElementById('show-login').onclick = () => {
+        clearErrors();
+        showLoginForm();
+    };
+    
+    document.getElementById('guest-login').onclick = () => {
+        // Tạo tài khoản khách ngẫu nhiên
+        const guestUsername = `Guest_${Math.floor(Math.random() * 10000)}`;
+        const guestPassword = '123456';
+        
+        if (!handleRegister(guestUsername, guestPassword)) {
+            // Nếu đã tồn tại, thử đăng nhập
+            handleLogin(guestUsername, guestPassword);
+        }
+    };
+    
+    // Event Listeners cho đăng xuất và đổi mật khẩu
+    document.getElementById('logout-btn').onclick = () => {
+        if (confirm('Bạn có chắc muốn đăng xuất?')) {
+            setCurrentUser(null);
+            location.reload();
+        }
+    };
+    
+    document.getElementById('change-password-btn').onclick = () => {
+        document.getElementById('change-password-modal').style.display = 'flex';
+        clearErrors();
+    };
+    
+    document.getElementById('cancel-change-password').onclick = () => {
+        document.getElementById('change-password-modal').style.display = 'none';
+        clearErrors();
+    };
+    
+    document.getElementById('submit-change-password').onclick = () => {
+        clearErrors();
+        const currentPassword = document.getElementById('current-password').value;
+        const newPassword = document.getElementById('new-password').value;
+        const confirmNewPassword = document.getElementById('confirm-new-password').value;
+        
+        if (!currentPassword) {
+            showError('current-password-error', 'Vui lòng nhập mật khẩu hiện tại');
+            return;
+        }
+        
+        if (!newPassword) {
+            showError('new-password-error', 'Vui lòng nhập mật khẩu mới');
+            return;
+        }
+        
+        if (!confirmNewPassword) {
+            showError('confirm-new-error', 'Vui lòng xác nhận mật khẩu mới');
+            return;
+        }
+        
+        if (handleChangePassword(currentPassword, newPassword, confirmNewPassword)) {
+            alert('Đổi mật khẩu thành công!');
+            document.getElementById('change-password-modal').style.display = 'none';
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-new-password').value = '';
+        }
+    };
+    
+    // Event Listeners cho game (giữ nguyên)
     document.getElementById('gacha-x1').onclick = () => roll(1);
     document.getElementById('gacha-x10').onclick = () => roll(10);
 
@@ -950,16 +1449,20 @@
 
     document.getElementById('clear').onclick = () => {
         if(confirm('XÓA HẾT DỮ LIỆU THẬT CHỨ?')) {
-            localStorage.removeItem('wcl_final_v2');
-            location.reload();
+            if (state.currentUser) {
+                saveUserData(state.currentUser, {
+                    inventory: [],
+                    smc: 0,
+                    spins: 0,
+                    buffs: {}
+                });
+                location.reload();
+            }
         }
     };
 
-    if (state.smc === 0 && state.spins === 0) {
-        save();
-    }
-
-    updateUI();
+    // Khởi tạo game
+    initGameState();
 </script>
 </body>
 </html>
