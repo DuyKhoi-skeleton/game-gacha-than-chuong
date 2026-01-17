@@ -1,3 +1,4 @@
+
  <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -1116,14 +1117,19 @@
     };
 
     const BASE_RATES = {
-        'Common': 69.895, 'Metal': 18.0,
-        'Silver': 2.0, 'Golden': 1.0,
-        'Platinum': 1.5, 'Diamond': 1.0, 'Titan': 0.5,
-        'Color-Shift': 3.0, 'Neon': 3.0, 'Rainbow': 0.1,
-        'Dark Matter': 0.05,
-        'Moon': 0.01
-    };
-
+    'Common': 45.0,       // Phổ biến nhất
+    'Metal': 20.0,        // Giảm dần...
+    'Silver': 12.0,
+    'Golden': 8.0,
+    'Platinum': 5.0,
+    'Diamond': 3.0,
+    'Color-Shift': 2.5,
+    'Neon': 2.0,
+    'Titan': 1.0,
+    'Rainbow': 0.8,       // Bắt đầu vào nhóm cực hiếm
+    'Dark Matter': 0.5,
+    'Moon': 0.2           // Hiếm nhất nhưng vẫn cao hơn 20 lần so với 0.01 cũ
+};
     const skins = [];
     function add(tier, count, prefix, cls) {
         for(let i=1; i<=count; i++) {
