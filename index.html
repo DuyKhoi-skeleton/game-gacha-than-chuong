@@ -1696,35 +1696,37 @@
                     state.inventory.push(pulledSkin.name);
                 }
 
-                const tierNum = getTierNum(pulledSkin);
-                let rewardSMC = 0;
+               // ===== REWARD SCALE - SMC NHẬN ĐƯỢC KHI QUAY (ĐÃ TĂNG 10 LẦN) =====
+const tierNum = getTierNum(pulledSkin);
+let rewardSMC = 0;
 
-                // ===== REWARD SCALE =====
-                if (tierNum >= 14) {          // Abyss
-                    rewardSMC = 15000;
-                }
-                else if (tierNum >= 13) {     // Nightmare
-                    rewardSMC = 7000;
-                }
-                else if (tierNum >= 12) {     // Moon
-                    rewardSMC = 2500;
-                }
-                else if (tierNum >= 11) {
-                    rewardSMC = 1000; 
-                }
-                else if (tierNum >= 10) {
-                    rewardSMC = 200; 
-                }
-                else if (tierNum >= 9) {
-                    rewardSMC = 50; 
-                }
-                else if (tierNum >= 8) {
-                    rewardSMC = 20; 
-                }
-                else if (tierNum >= 7) {
-                    rewardSMC = 5;
-                }
-
+// Phân cấp SMC theo độ hiếm của skin - ĐÃ NHÂN 10
+if (tierNum >= 14) {          // Abyss (ABY 1)
+    rewardSMC = 150000;        // SIÊU KHỦNG: 150,000 SMC (gấp 10 lần)
+}
+else if (tierNum >= 13) {     // Nightmare (NM 1, NM 2)
+    rewardSMC = 70000;         // CỰC HIẾM: 70,000 SMC (gấp 10 lần)
+}
+else if (tierNum >= 12) {     // Moon (Moon Neon 1)
+    rewardSMC = 25000;         // SIÊU HIẾM: 25,000 SMC (gấp 10 lần)
+}
+else if (tierNum >= 11) {     // Dark Matter (DM 1)
+    rewardSMC = 10000;         // RẤT HIẾM: 10,000 SMC (gấp 10 lần)
+}
+else if (tierNum >= 10) {     // Rainbow (R 1, R 2)
+    rewardSMC = 2000;          // HIẾM: 2,000 SMC (gấp 10 lần)
+}
+else if (tierNum >= 9) {      // Neon (N 1 - N 6)
+    rewardSMC = 500;           // TRUNG BÌNH: 500 SMC (gấp 10 lần)
+}
+else if (tierNum >= 8) {      // Color-Shift (CS 1 - CS 8)
+    rewardSMC = 200;           // KHÁ: 200 SMC (gấp 10 lần)
+}
+else if (tierNum >= 7) {      // Titan (T 1 - T 4)
+    rewardSMC = 50;            // THƯỜNG: 50 SMC (gấp 10 lần)
+}
+// Diamond (6), Platinum (5), Golden (4), Silver (3), Metal (2), Common (1)
+// VẪN 0 SMC - chỉ có skin
                 // ===== BUFF LOGIC =====
                 if (state.buffs?.smc_x2 && state.spins <= state.buffs.smc_x2) {
                     rewardSMC *= 2;
