@@ -28,6 +28,100 @@
             position: relative;
         }
         
+        /* Flash effect */
+        .flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #fff, transparent);
+            animation: flash 0.6s forwards;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        @keyframes flash {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
+        /* Dark overlay for epic */
+        .dark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            animation: darkFade 1.5s forwards;
+            pointer-events: none;
+            z-index: 9998;
+        }
+        
+        @keyframes darkFade {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
+        /* Spin animation */
+        .spin-effect {
+            animation: spin 1.5s ease-out;
+        }
+        
+        @keyframes spin {
+            0% { transform: scale(0.2) rotate(-360deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+        
+        /* Shake animation */
+        .shake-effect {
+            animation: shake 0.4s;
+        }
+        
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            50% { transform: translateX(6px); }
+            75% { transform: translateX(-4px); }
+            100% { transform: translateX(0); }
+        }
+        
+        /* Legendary text */
+        .legendary-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5em;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 20px #ff0000, 0 0 40px #ff8c00, 0 0 60px #ffd700;
+            animation: legendaryPop 2s forwards;
+            z-index: 10000;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        
+        @keyframes legendaryPop {
+            0% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.5);
+                text-shadow: 0 0 20px #ff0000;
+            }
+            50% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.2);
+                text-shadow: 0 0 40px #ff8c00, 0 0 60px #ffd700;
+            }
+            100% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(1.5);
+                text-shadow: 0 0 60px #ffd700;
+            }
+        }
+        
         /* Login/Register Form Styles */
         #login-form, #register-form {
             background: rgba(255, 255, 255, 0.95);
@@ -204,6 +298,8 @@
             background: #f0f0f0; 
             color: #333;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-group{
@@ -226,6 +322,37 @@
             color:#fff;
             font-size:1.4em;
             padding:18px 40px;
+        }
+
+        #gacha-x5-free{
+            background: linear-gradient(135deg, #00c9a7, #00b4d8);
+            color:#fff;
+            font-size:1.5em;
+            padding:20px 45px;
+            box-shadow:0 0 20px rgba(0,201,167,0.8);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #ffd700;
+        }
+
+        #gacha-x5-free::before {
+            content: "⭐";
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            animation: star 1.5s infinite alternate;
+        }
+
+        #gacha-x5-free::after {
+            content: "⭐";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            animation: star 1.5s infinite alternate;
         }
 
         #gacha-x10{
@@ -256,37 +383,6 @@
             transform: translateY(-50%);
             font-size: 1.2em;
             animation: fire 1s infinite alternate;
-        }
-
-        #gacha-x5-free {
-            background: linear-gradient(135deg, #00c9a7, #00b4d8);
-            color: #fff;
-            font-size: 1.5em;
-            padding: 20px 45px;
-            box-shadow: 0 0 20px rgba(0, 201, 167, 0.8);
-            position: relative;
-            overflow: hidden;
-            border: 2px solid #ffd700;
-        }
-
-        #gacha-x5-free::before {
-            content: "⭐";
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2em;
-            animation: star 1.5s infinite alternate;
-        }
-
-        #gacha-x5-free::after {
-            content: "⭐";
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2em;
-            animation: star 1.5s infinite alternate;
         }
 
         @keyframes fire {
@@ -354,7 +450,6 @@
             border-radius: 15px;
             font-weight: bold;
             font-size: 1.2em;
-            animation: pop 0.6s forwards;
             border: 1px solid rgba(0, 0, 0, 0.1); 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
         }
@@ -412,6 +507,7 @@
         .rate-tier.rainbow { color: #ff6b6b; text-shadow: 0 0 15px #ff6b6b; }
         .rate-tier.darkmatter { color: #8a2be2; text-shadow: 0 0 15px #8a2be2; }
         .rate-tier.moon { color: #ffd700; text-shadow: 0 0 15px #ffd700; }
+        .rate-tier.tornado { color: #00ffff; text-shadow: 0 0 15px #00ffff; }
         .rate-tier.nightmare { color: #ff0000; text-shadow: 0 0 15px #ff0000; }
         .rate-tier.abyss { color: #00ffff; text-shadow: 0 0 15px #00ffff; }
         
@@ -454,6 +550,7 @@
         .skin-item.rainbow { border-left-color: #ff6b6b; }
         .skin-item.darkmatter { border-left-color: #8a2be2; }
         .skin-item.moon { border-left-color: #ffd700; }
+        .skin-item.tornado { border-left-color: #00ffff; }
         .skin-item.nightmare { border-left-color: #ff0000; }
         .skin-item.abyss { border-left-color: #00ffff; }
         
@@ -488,6 +585,50 @@
             color: #ffd700 !important;
             font-size: 1.5em;
         }
+
+/* TORNADO SKIN STYLES */
+.skin-tornado-1 {
+    background: linear-gradient(135deg, #00ffff, #0080ff, #0000ff);
+    color: #fff;
+    border: 4px solid #00ffff;
+    box-shadow: 0 0 30px #00ffff;
+    animation: tornado-spin 3s linear infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.skin-tornado-1::before {
+    content: "🌪️";
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    animation: tornado-icon 2s ease-in-out infinite;
+}
+
+.skin-tornado-1::after {
+    content: "🌪️";
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    animation: tornado-icon 2s ease-in-out infinite reverse;
+}
+
+@keyframes tornado-spin {
+    0% { background: linear-gradient(135deg, #00ffff, #0080ff, #0000ff); }
+    33% { background: linear-gradient(135deg, #0080ff, #0000ff, #00ffff); }
+    66% { background: linear-gradient(135deg, #0000ff, #00ffff, #0080ff); }
+    100% { background: linear-gradient(135deg, #00ffff, #0080ff, #0000ff); }
+}
+
+@keyframes tornado-icon {
+    0% { transform: translateY(-50%) rotate(0deg) scale(1); }
+    50% { transform: translateY(-50%) rotate(180deg) scale(1.3); }
+    100% { transform: translateY(-50%) rotate(360deg) scale(1); }
+}
 
 /* ------------------------------------------------------------------- */
         /* TIER 1: COMMON (C) - 72 SKINS - BẢNG MÀU QUANG PHỔ (CẬP NHẬT LẦN 2) */
@@ -1006,6 +1147,53 @@
     }
 }
 /* ------------------------------------------------------------------- */
+/* TIER 12: TORNADO (TN) - 1 SKIN - LỐC XOÁY */
+/* ------------------------------------------------------------------- */
+
+.skin-tornado-1 {
+    background: linear-gradient(135deg, #00ffff, #0080ff, #0000ff);
+    color: #fff;
+    border: 4px solid #00ffff;
+    box-shadow: 0 0 30px #00ffff;
+    animation: tornado-spin 3s linear infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.skin-tornado-1::before {
+    content: "🌪️";
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    animation: tornado-icon 2s ease-in-out infinite;
+}
+
+.skin-tornado-1::after {
+    content: "🌪️";
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    animation: tornado-icon 2s ease-in-out infinite reverse;
+}
+
+@keyframes tornado-spin {
+    0% { background: linear-gradient(135deg, #00ffff, #0080ff, #0000ff); }
+    33% { background: linear-gradient(135deg, #0080ff, #0000ff, #00ffff); }
+    66% { background: linear-gradient(135deg, #0000ff, #00ffff, #0080ff); }
+    100% { background: linear-gradient(135deg, #00ffff, #0080ff, #0000ff); }
+}
+
+@keyframes tornado-icon {
+    0% { transform: translateY(-50%) rotate(0deg) scale(1); }
+    50% { transform: translateY(-50%) rotate(180deg) scale(1.3); }
+    100% { transform: translateY(-50%) rotate(360deg) scale(1); }
+}
+
+/* ------------------------------------------------------------------- */
 /* TIER 13: NIGHTMARE (NM) - 2 SKINS - ÁC MỘNG ĐỎ ĐEN */
 /* ------------------------------------------------------------------- */
 
@@ -1113,12 +1301,12 @@
         </div>
 
         <h1>WCL GACHA x10</h1>
-        <div style="font-size:1.6em;color:#ffd700;margin-bottom:20px">155 Skin • cố mà farm đủ đi!!!</div>
+        <div style="font-size:1.6em;color:#ffd700;margin-bottom:20px">156 Skin • cố mà farm đủ đi!!!</div>
        
         <div class="economy-bar">
             <span>SMC: <span id="smc">0</span></span>
             <span>Vòng: <span id="spins">0</span></span>
-            <span>Skin: <span id="owned">0</span>/155</span>
+            <span>Skin: <span id="owned">0</span>/156</span>
         </div>
         
         <!-- FREE SPINS COUNTER -->
@@ -1134,7 +1322,7 @@
             <div class="rate-note">
                 <span class="rate-highlight">⚠️ LƯU Ý:</span> Tỉ lệ có thể thay đổi khi sử dụng <span class="rate-warning">BUFF Tỉ Lệ Hiếm</span> trong shop!<br>
                 <span class="rate-highlight">🌈 RAINBOW (R1, R2):</span> 0.8% | <span class="rate-highlight">🌑 DARK MATTER (DM1):</span> 0.5% | <span class="rate-highlight">🌙 MOON (Moon1):</span> 0.2%<br>
-                <span class="rate-highlight">👹 NIGHTMARE (NM1, NM2):</span> 0.1% (1/1000) | <span class="rate-highlight">🌀 ABYSS (ABY1):</span> 0.01% (1/10000)
+                <span class="rate-highlight">🌪️ TORNADO (TN1):</span> 0.05% (1/2000) | <span class="rate-highlight">👹 NIGHTMARE (NM1, NM2):</span> 0.1% | <span class="rate-highlight">🌀 ABYSS (ABY1):</span> 0.01%
             </div>
         </div>
         
@@ -1229,8 +1417,8 @@
             smc: 0,
             spins: 0,
             buffs: {},
-            freeSpins: 5, // 5 lượt quay X5 free mỗi ngày
-            lastFreeSpinReset: Date.now() // Thời gian reset cuối cùng
+            freeSpins: 5,
+            lastFreeSpinReset: Date.now()
         };
         
         try {
@@ -1263,12 +1451,11 @@
         if (!state.currentUser) return;
         
         const now = Date.now();
-        const ONE_DAY = 24 * 60 * 60 * 1000; // 24h tính bằng milliseconds
+        const ONE_DAY = 24 * 60 * 60 * 1000;
         
-        // Nếu đã qua 24h kể từ lần reset cuối
         if (now - state.lastFreeSpinReset >= ONE_DAY) {
-            state.freeSpins = 5; // Reset về 5 lượt
-            state.lastFreeSpinReset = now; // Cập nhật thời gian reset
+            state.freeSpins = 5;
+            state.lastFreeSpinReset = now;
             save();
             updateFreeSpinsDisplay();
         }
@@ -1283,7 +1470,6 @@
             freeSpinsEl.textContent = state.freeSpins;
         }
         
-        // Hiển thị countdown nếu hết lượt free
         if (state.freeSpins <= 0 && countdownEl) {
             const now = Date.now();
             const nextReset = state.lastFreeSpinReset + (24 * 60 * 60 * 1000);
@@ -1297,10 +1483,8 @@
                 countdownEl.style.display = 'inline-block';
                 countdownEl.textContent = `⏳ ${hours}h ${minutes}m ${seconds}s`;
                 
-                // Tự động cập nhật mỗi giây
                 setTimeout(updateFreeSpinsDisplay, 1000);
             } else {
-                // Đã đến giờ reset
                 checkAndResetFreeSpins();
             }
         } else if (countdownEl) {
@@ -1308,7 +1492,7 @@
         }
     }
     
-    // Khởi tạo game state từ người dùng hiện tại
+    // Khởi tạo game state
     function initGameState() {
         const currentUser = getCurrentUser();
         if (currentUser) {
@@ -1318,31 +1502,25 @@
                 ...userData,
                 currentUser: currentUser
             };
-            // Kiểm tra reset free spins khi vào game
             checkAndResetFreeSpins();
             showMainContent(currentUser);
-            
-            // Bắt đầu countdown nếu cần
             updateFreeSpinsDisplay();
         } else {
             showLoginForm();
         }
     }
     
-    // Hiển thị form đăng nhập
     function showLoginForm() {
         document.getElementById('login-form').classList.add('active');
         document.getElementById('register-form').classList.remove('active');
         document.getElementById('main-content').classList.remove('active');
     }
     
-    // Hiển thị form đăng ký
     function showRegisterForm() {
         document.getElementById('login-form').classList.remove('active');
         document.getElementById('register-form').classList.add('active');
     }
     
-    // Hiển thị nội dung game chính
     function showMainContent(username) {
         document.getElementById('login-form').classList.remove('active');
         document.getElementById('register-form').classList.remove('active');
@@ -1352,7 +1530,7 @@
         updateUI();
     }
     
-    // Render bảng tỉ lệ skin siêu hiếm
+    // Render bảng tỉ lệ với TORNADO
     function renderRateTable() {
         const container = document.getElementById('rate-table');
         if (!container) return;
@@ -1361,6 +1539,7 @@
             { name: '🌈 RAINBOW', skins: ['R 1', 'R 2'], rate: '0.8%', color: 'rainbow', class: 'rainbow' },
             { name: '🌑 DARK MATTER', skins: ['DM 1'], rate: '0.5%', color: 'darkmatter', class: 'darkmatter' },
             { name: '🌙 MOON', skins: ['Moon Neon 1'], rate: '0.2%', color: 'moon', class: 'moon' },
+            { name: '🌪️ TORNADO', skins: ['TN 1'], rate: '0.05%', color: 'tornado', class: 'tornado' },
             { name: '👹 NIGHTMARE', skins: ['NM 1', 'NM 2'], rate: '0.1%', color: 'nightmare', class: 'nightmare' },
             { name: '🌀 ABYSS', skins: ['ABY 1'], rate: '0.01%', color: 'abyss', class: 'abyss' }
         ];
@@ -1370,7 +1549,6 @@
                 <div class="rate-tier ${tier.color}">${tier.name}</div>
                 <div class="skin-list">
                     ${tier.skins.map(skin => {
-                        // Tìm skin trong danh sách để lấy className
                         const skinObj = skins.find(s => s.name === skin);
                         const className = skinObj ? skinObj.className : '';
                         return `
@@ -1385,11 +1563,9 @@
         `).join('');
     }
     
-    // Xử lý đăng nhập
     function handleLogin(username, password) {
         const accounts = getAccounts();
         
-        // Kiểm tra tài khoản
         if (!accounts[username]) {
             showError('login-username-error', 'Tài khoản không tồn tại');
             return false;
@@ -1400,17 +1576,14 @@
             return false;
         }
         
-        // Đăng nhập thành công
         setCurrentUser(username);
         initGameState();
         return true;
     }
     
-    // Xử lý đăng ký
     function handleRegister(username, password) {
         const accounts = getAccounts();
         
-        // Kiểm tra tên đăng nhập
         if (username.length < 3 || username.length > 20) {
             showError('register-username-error', 'Tên đăng nhập phải từ 3-20 ký tự');
             return false;
@@ -1426,17 +1599,14 @@
             return false;
         }
         
-        // Kiểm tra mật khẩu
         if (password.length < 6) {
             showError('register-password-error', 'Mật khẩu phải có ít nhất 6 ký tự');
             return false;
         }
         
-        // Đăng ký thành công
         accounts[username] = password;
         saveAccounts(accounts);
         
-        // Tạo dữ liệu game mặc định cho user mới
         saveUserData(username, {
             inventory: [],
             smc: 0,
@@ -1446,24 +1616,20 @@
             lastFreeSpinReset: Date.now()
         });
         
-        // Tự động đăng nhập
         setCurrentUser(username);
         initGameState();
         return true;
     }
     
-    // Xử lý đổi mật khẩu
     function handleChangePassword(currentPassword, newPassword, confirmPassword) {
         const username = getCurrentUser();
         const accounts = getAccounts();
         
-        // Kiểm tra mật khẩu hiện tại
         if (accounts[username] !== currentPassword) {
             showError('current-password-error', 'Mật khẩu hiện tại không đúng');
             return false;
         }
         
-        // Kiểm tra mật khẩu mới
         if (newPassword.length < 6) {
             showError('new-password-error', 'Mật khẩu mới phải có ít nhất 6 ký tự');
             return false;
@@ -1474,27 +1640,23 @@
             return false;
         }
         
-        // Cập nhật mật khẩu
         accounts[username] = newPassword;
         saveAccounts(accounts);
         return true;
     }
     
-    // Hiển thị lỗi
     function showError(elementId, message) {
         const element = document.getElementById(elementId);
         element.textContent = message;
         element.style.display = 'block';
     }
     
-    // Ẩn tất cả lỗi
     function clearErrors() {
         document.querySelectorAll('.error-message').forEach(el => {
             el.style.display = 'none';
         });
     }
     
-    // Lưu game state
     function save() {
         if (state.currentUser) {
             saveUserData(state.currentUser, {
@@ -1510,10 +1672,11 @@
         updateFreeSpinsDisplay();
     }
     
-    // Các phần còn lại của game logic
+    // TIER ĐÃ THÊM TORNADO
     const TIER = {
         'Abyss': 14,
         'Nightmare': 13,
+        'Tornado': 12.5,
         'Moon': 12,
         'Dark Matter': 11,
         'Rainbow': 10,
@@ -1528,8 +1691,9 @@
         'Common': 1
     };
 
+    // BASE RATES ĐÃ THÊM TORNADO
     const BASE_RATES = {
-        'Common': 44.89,
+        'Common': 44.84,
         'Metal': 20.0,
         'Silver': 12.0,
         'Golden': 8.0,
@@ -1541,8 +1705,9 @@
         'Rainbow': 0.8,
         'Dark Matter': 0.5,
         'Moon': 0.2,
-        'Nightmare': 0.1,   // 1/1000
-        'Abyss': 0.01       // 1/10000
+        'Tornado': 0.05,
+        'Nightmare': 0.1,
+        'Abyss': 0.01
     };
     
     const skins = [];
@@ -1563,6 +1728,7 @@
     add('Rainbow',2,'R','skin-rainbow');
     add('Dark Matter',1,'DM','skin-darkmatter');
     skins.push({name: 'Moon Neon 1', tier: 'Moon', className: 'moon-neon-skin'});
+    add('Tornado',1,'TN','skin-tornado');
     add('Nightmare',2,'NM','skin-nightmare');
     add('Abyss',1,'ABY','skin-abyss');
     
@@ -1589,23 +1755,17 @@
         const r = {...BASE_RATES};
 
         if (state.buffs.luck_buff && state.spins < state.buffs.luck_buff) {
-            // ===== GIẢM TIER LỎ =====
             r.Common -= 5.0;
             r.Metal -= 2.0;
             r.Silver -= 1.0;
-
-            // ===== TĂNG TIER XỊN VỪA =====
             r.Golden += 1.0;
             r.Platinum += 1.0;
             r.Diamond += 1.5;
             r.Titan += 1.5;
-
-            // ===== TĂNG TIER HIẾM =====
             r.Rainbow += 0.5;
             r['Dark Matter'] += 0.1;
             r.Moon += 0.02;
-
-            // Nếu có Nightmare/Abyss thì tăng siêu nhẹ thôi
+            r.Tornado += 0.01;
             if (r.Nightmare) r.Nightmare += 0.01;
             if (r.Abyss) r.Abyss += 0.001;
         }
@@ -1634,7 +1794,7 @@
             display.classList.add(first.className);
         }
 
-        const rareTiers = ['Titan','Diamond','Rainbow','Dark Matter','Platinum','Golden','Moon', 'Nightmare', 'Abyss'];
+        const rareTiers = ['Titan','Diamond','Rainbow','Dark Matter','Platinum','Golden','Moon', 'Tornado', 'Nightmare', 'Abyss'];
         if(results.some(r=> rareTiers.includes(r.tier))) {
             try { confetti({particleCount:80,spread:80}); } catch(e){}
         }
@@ -1643,24 +1803,20 @@
     function roll(count) {
         count = Math.max(1, Math.floor(count) || 1);
         
-        // KIỂM TRA CHO QUAY X5 FREE
         if (count === 5) {
             if (state.freeSpins <= 0) {
                 alert(`🚫 HẾT LƯỢT QUAY FREE!\nVui lòng đợi ${document.getElementById('countdown-timer').textContent} để có lượt mới\nHoặc mua thêm trong SHOP (2,000 SMC / 5 lượt)`);
                 return;
             }
-            // TRỪ 1 LƯỢT FREE (vì 1 lượt = quay 5 lần)
             state.freeSpins -= 1;
         }
         
-        // KIỂM TRA PHÍ QUAY CHO X10
         if (count === 10) {
             const cost = 5000;
             if (state.smc < cost) {
                 alert(`🚫 KHÔNG ĐỦ SMC!\nCần ${cost} SMC để quay 10 lần.\nBạn đang có: ${state.smc} SMC`);
                 return;
             }
-            // TRỪ SMC KHI QUAY X10
             state.smc -= cost;
         }
         
@@ -1685,7 +1841,6 @@
                 }
             }
 
-            // Lọc các skin thuộc tier đã chọn
             const tierSkins = skins.filter(s => s.tier === selectedTier);
             if (tierSkins.length > 0) {
                 const pulledSkin = tierSkins[Math.floor(Math.random() * tierSkins.length)];
@@ -1696,38 +1851,38 @@
                     state.inventory.push(pulledSkin.name);
                 }
 
-               // ===== REWARD SCALE - SMC NHẬN ĐƯỢC KHI QUAY (ĐÃ TĂNG 10 LẦN) =====
-const tierNum = getTierNum(pulledSkin);
-let rewardSMC = 0;
+                const tierNum = getTierNum(pulledSkin);
+                let rewardSMC = 0;
 
-// Phân cấp SMC theo độ hiếm của skin - ĐÃ NHÂN 10
-if (tierNum >= 14) {          // Abyss (ABY 1)
-    rewardSMC = 150000;        // SIÊU KHỦNG: 150,000 SMC (gấp 10 lần)
-}
-else if (tierNum >= 13) {     // Nightmare (NM 1, NM 2)
-    rewardSMC = 70000;         // CỰC HIẾM: 70,000 SMC (gấp 10 lần)
-}
-else if (tierNum >= 12) {     // Moon (Moon Neon 1)
-    rewardSMC = 25000;         // SIÊU HIẾM: 25,000 SMC (gấp 10 lần)
-}
-else if (tierNum >= 11) {     // Dark Matter (DM 1)
-    rewardSMC = 10000;         // RẤT HIẾM: 10,000 SMC (gấp 10 lần)
-}
-else if (tierNum >= 10) {     // Rainbow (R 1, R 2)
-    rewardSMC = 2000;          // HIẾM: 2,000 SMC (gấp 10 lần)
-}
-else if (tierNum >= 9) {      // Neon (N 1 - N 6)
-    rewardSMC = 500;           // TRUNG BÌNH: 500 SMC (gấp 10 lần)
-}
-else if (tierNum >= 8) {      // Color-Shift (CS 1 - CS 8)
-    rewardSMC = 200;           // KHÁ: 200 SMC (gấp 10 lần)
-}
-else if (tierNum >= 7) {      // Titan (T 1 - T 4)
-    rewardSMC = 50;            // THƯỜNG: 50 SMC (gấp 10 lần)
-}
-// Diamond (6), Platinum (5), Golden (4), Silver (3), Metal (2), Common (1)
-// VẪN 0 SMC - chỉ có skin
-                // ===== BUFF LOGIC =====
+                // ===== REWARD SCALE - ĐÃ THÊM TORNADO =====
+                if (tierNum >= 14) {          // Abyss
+                    rewardSMC = 150000;
+                }
+                else if (tierNum >= 13) {     // Nightmare
+                    rewardSMC = 70000;
+                }
+                else if (tierNum >= 12.5) {   // Tornado
+                    rewardSMC = 50000;
+                }
+                else if (tierNum >= 12) {     // Moon
+                    rewardSMC = 25000;
+                }
+                else if (tierNum >= 11) {     // Dark Matter
+                    rewardSMC = 10000;
+                }
+                else if (tierNum >= 10) {     // Rainbow
+                    rewardSMC = 2000;
+                }
+                else if (tierNum >= 9) {      // Neon
+                    rewardSMC = 500;
+                }
+                else if (tierNum >= 8) {      // Color-Shift
+                    rewardSMC = 200;
+                }
+                else if (tierNum >= 7) {      // Titan
+                    rewardSMC = 50;
+                }
+
                 if (state.buffs?.smc_x2 && state.spins <= state.buffs.smc_x2) {
                     rewardSMC *= 2;
                 }
@@ -1754,8 +1909,6 @@ else if (tierNum >= 7) {      // Titan (T 1 - T 4)
         }, 800);
 
         showResults(results);
-        
-        // Cập nhật UI ngay sau khi quay
         updateUI();
         updateFreeSpinsDisplay();
     }
@@ -1768,11 +1921,8 @@ else if (tierNum >= 7) {      // Titan (T 1 - T 4)
             const active = item.duration && state.buffs[item.id] && state.spins <= state.buffs[item.id];
             const remaining = active ? state.buffs[item.id] - state.spins : 0;
             
-            // Kiểm tra đặc biệt cho item free_spins
             let disabled = state.smc < item.price;
-            if (item.id === 'free_spins') {
-                disabled = state.smc < item.price;
-            } else {
+            if (item.id !== 'free_spins') {
                 disabled = state.smc < item.price || bought;
             }
 
@@ -1799,10 +1949,9 @@ else if (tierNum >= 7) {      // Titan (T 1 - T 4)
         if(!item) return;
         if(state.smc < item.price) return;
         
-        // XỬ LÝ MUA LƯỢT QUAY FREE
         if (id === 'free_spins') {
             state.smc -= item.price;
-            state.freeSpins += 5; // Cộng thêm 5 lượt quay X5
+            state.freeSpins += 5;
             alert(`🎉 MUA THÀNH CÔNG!\nBạn đã mua 5 lượt quay X5.\nTổng lượt hiện tại: ${state.freeSpins}`);
             save();
             renderShop();
@@ -1837,7 +1986,6 @@ else if (tierNum >= 7) {      // Titan (T 1 - T 4)
         renderShop();
     }
 
-    // Event Listeners cho đăng nhập/đăng ký
     document.getElementById('login-submit').onclick = () => {
         clearErrors();
         const username = document.getElementById('login-username').value.trim();
@@ -1891,17 +2039,14 @@ else if (tierNum >= 7) {      // Titan (T 1 - T 4)
     };
     
     document.getElementById('guest-login').onclick = () => {
-        // Tạo tài khoản khách ngẫu nhiên
         const guestUsername = `Guest_${Math.floor(Math.random() * 10000)}`;
         const guestPassword = '123456';
         
         if (!handleRegister(guestUsername, guestPassword)) {
-            // Nếu đã tồn tại, thử đăng nhập
             handleLogin(guestUsername, guestPassword);
         }
     };
     
-    // Event Listeners cho đăng xuất và đổi mật khẩu
     document.getElementById('logout-btn').onclick = () => {
         if (confirm('Bạn có chắc muốn đăng xuất?')) {
             setCurrentUser(null);
@@ -1949,7 +2094,6 @@ else if (tierNum >= 7) {      // Titan (T 1 - T 4)
         }
     };
     
-    // Event Listeners cho game
     document.getElementById('gacha-x1').onclick = () => roll(1);
     document.getElementById('gacha-x5-free').onclick = () => roll(5);
     document.getElementById('gacha-x10').onclick = () => roll(10);
@@ -1992,7 +2136,6 @@ else if (tierNum >= 7) {      // Titan (T 1 - T 4)
         }
     };
 
-    // Khởi tạo game
     initGameState();
 </script>
 </body>
