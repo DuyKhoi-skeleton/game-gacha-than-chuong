@@ -451,7 +451,122 @@
             font-weight: bold;
             font-size: 1.2em;
             border: 1px solid rgba(0, 0, 0, 0.1); 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-left: 40px !important;
+            text-align: left;
+        }
+        
+        .result-item::before {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+        }
+        
+        /* Icons cho từng tier */
+        .skin-common-1::before, .skin-common-2::before, .skin-common-3::before,
+        .skin-common-4::before, .skin-common-5::before, .skin-common-6::before,
+        .skin-common-7::before, .skin-common-8::before, .skin-common-9::before,
+        .skin-common-10::before, .skin-common-11::before, .skin-common-12::before,
+        .skin-common-13::before, .skin-common-14::before, .skin-common-15::before,
+        .skin-common-16::before, .skin-common-17::before, .skin-common-18::before,
+        .skin-common-19::before, .skin-common-20::before, .skin-common-21::before,
+        .skin-common-22::before, .skin-common-23::before, .skin-common-24::before,
+        .skin-common-25::before, .skin-common-26::before, .skin-common-27::before,
+        .skin-common-28::before, .skin-common-29::before, .skin-common-30::before,
+        .skin-common-31::before, .skin-common-32::before, .skin-common-33::before,
+        .skin-common-34::before, .skin-common-35::before, .skin-common-36::before,
+        .skin-common-37::before, .skin-common-38::before, .skin-common-39::before,
+        .skin-common-40::before, .skin-common-41::before, .skin-common-42::before,
+        .skin-common-43::before, .skin-common-44::before, .skin-common-45::before,
+        .skin-common-46::before, .skin-common-47::before, .skin-common-48::before,
+        .skin-common-49::before, .skin-common-50::before, .skin-common-51::before,
+        .skin-common-52::before, .skin-common-53::before, .skin-common-54::before,
+        .skin-common-55::before, .skin-common-56::before, .skin-common-57::before,
+        .skin-common-58::before, .skin-common-59::before, .skin-common-60::before,
+        .skin-common-61::before, .skin-common-62::before, .skin-common-63::before,
+        .skin-common-64::before, .skin-common-65::before, .skin-common-66::before,
+        .skin-common-67::before, .skin-common-68::before, .skin-common-69::before,
+        .skin-common-70::before, .skin-common-71::before, .skin-common-72::before {
+            content: "⚪";
+        }
+        
+        .skin-metal-1::before, .skin-metal-2::before, .skin-metal-3::before,
+        .skin-metal-4::before, .skin-metal-5::before, .skin-metal-6::before,
+        .skin-metal-7::before, .skin-metal-8::before, .skin-metal-9::before,
+        .skin-metal-10::before, .skin-metal-11::before, .skin-metal-12::before,
+        .skin-metal-13::before, .skin-metal-14::before, .skin-metal-15::before,
+        .skin-metal-16::before, .skin-metal-17::before, .skin-metal-18::before,
+        .skin-metal-19::before, .skin-metal-20::before, .skin-metal-21::before,
+        .skin-metal-22::before, .skin-metal-23::before, .skin-metal-24::before,
+        .skin-metal-25::before, .skin-metal-26::before, .skin-metal-27::before,
+        .skin-metal-28::before, .skin-metal-29::before, .skin-metal-30::before,
+        .skin-metal-31::before, .skin-metal-32::before, .skin-metal-33::before,
+        .skin-metal-34::before, .skin-metal-35::before, .skin-metal-36::before {
+            content: "🔩";
+        }
+        
+        .skin-silver-1::before, .skin-silver-2::before {
+            content: "🥈";
+        }
+        
+        .skin-golden-1::before, .skin-golden-2::before {
+            content: "🥇";
+        }
+        
+        .skin-platinum-1::before, .skin-platinum-2::before, .skin-platinum-3::before,
+        .skin-platinum-4::before, .skin-platinum-5::before, .skin-platinum-6::before,
+        .skin-platinum-7::before, .skin-platinum-8::before, .skin-platinum-9::before,
+        .skin-platinum-10::before {
+            content: "💎";
+        }
+        
+        .skin-diamond-1::before, .skin-diamond-2::before, .skin-diamond-3::before,
+        .skin-diamond-4::before, .skin-diamond-5::before, .skin-diamond-6::before,
+        .skin-diamond-7::before, .skin-diamond-8::before {
+            content: "🔷";
+        }
+        
+        .skin-titan-1::before, .skin-titan-2::before, .skin-titan-3::before,
+        .skin-titan-4::before {
+            content: "⚙️";
+        }
+        
+        .skin-shift-1::before, .skin-shift-2::before, .skin-shift-3::before,
+        .skin-shift-4::before, .skin-shift-5::before, .skin-shift-6::before,
+        .skin-shift-7::before, .skin-shift-8::before {
+            content: "🎨";
+        }
+        
+        .skin-neon-1::before, .skin-neon-2::before, .skin-neon-3::before,
+        .skin-neon-4::before, .skin-neon-5::before, .skin-neon-6::before {
+            content: "💡";
+        }
+        
+        .skin-rainbow-1::before, .skin-rainbow-2::before {
+            content: "🌈";
+        }
+        
+        .skin-darkmatter-1::before {
+            content: "⚫";
+        }
+        
+        .moon-neon-skin::before {
+            content: "🌙";
+        }
+        
+        .skin-tornado-1::before {
+            content: "🌪️";
+        }
+        
+        .skin-nightmare-1::before, .skin-nightmare-2::before {
+            content: "👹";
+        }
+        
+        .skin-abyss-1::before {
+            content: "🌀";
         }
         
         /* RATE TABLE STYLES */
@@ -527,7 +642,24 @@
             font-size: 1.2em;
             border-left: 4px solid;
             transition: all 0.2s;
+            position: relative;
+            padding-left: 40px !important;
         }
+        
+        .skin-item::before {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+        }
+        
+        .skin-item.rainbow::before { content: "🌈"; }
+        .skin-item.darkmatter::before { content: "⚫"; }
+        .skin-item.moon::before { content: "🌙"; }
+        .skin-item.tornado::before { content: "🌪️"; }
+        .skin-item.nightmare::before { content: "👹"; }
+        .skin-item.abyss::before { content: "🌀"; }
         
         .skin-item:hover {
             background: rgba(255, 255, 255, 0.1);
@@ -597,37 +729,11 @@
     overflow: hidden;
 }
 
-.skin-tornado-1::before {
-    content: "🌪️";
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.2em;
-    animation: tornado-icon 2s ease-in-out infinite;
-}
-
-.skin-tornado-1::after {
-    content: "🌪️";
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.2em;
-    animation: tornado-icon 2s ease-in-out infinite reverse;
-}
-
 @keyframes tornado-spin {
     0% { background: linear-gradient(135deg, #00ffff, #0080ff, #0000ff); }
     33% { background: linear-gradient(135deg, #0080ff, #0000ff, #00ffff); }
     66% { background: linear-gradient(135deg, #0000ff, #00ffff, #0080ff); }
     100% { background: linear-gradient(135deg, #00ffff, #0080ff, #0000ff); }
-}
-
-@keyframes tornado-icon {
-    0% { transform: translateY(-50%) rotate(0deg) scale(1); }
-    50% { transform: translateY(-50%) rotate(180deg) scale(1.3); }
-    100% { transform: translateY(-50%) rotate(360deg) scale(1); }
 }
 
 /* ------------------------------------------------------------------- */
@@ -1160,37 +1266,11 @@
     overflow: hidden;
 }
 
-.skin-tornado-1::before {
-    content: "🌪️";
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.2em;
-    animation: tornado-icon 2s ease-in-out infinite;
-}
-
-.skin-tornado-1::after {
-    content: "🌪️";
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.2em;
-    animation: tornado-icon 2s ease-in-out infinite reverse;
-}
-
 @keyframes tornado-spin {
     0% { background: linear-gradient(135deg, #00ffff, #0080ff, #0000ff); }
     33% { background: linear-gradient(135deg, #0080ff, #0000ff, #00ffff); }
     66% { background: linear-gradient(135deg, #0000ff, #00ffff, #0080ff); }
     100% { background: linear-gradient(135deg, #00ffff, #0080ff, #0000ff); }
-}
-
-@keyframes tornado-icon {
-    0% { transform: translateY(-50%) rotate(0deg) scale(1); }
-    50% { transform: translateY(-50%) rotate(180deg) scale(1.3); }
-    100% { transform: translateY(-50%) rotate(360deg) scale(1); }
 }
 
 /* ------------------------------------------------------------------- */
@@ -1380,27 +1460,22 @@
     const ACCOUNTS_KEY = 'wcl_gacha_accounts';
     const CURRENT_USER_KEY = 'wcl_current_user';
     
-    // Khởi tạo dữ liệu tài khoản nếu chưa có
     if (!localStorage.getItem(ACCOUNTS_KEY)) {
         localStorage.setItem(ACCOUNTS_KEY, JSON.stringify({}));
     }
     
-    // Lấy danh sách tài khoản
     function getAccounts() {
         return JSON.parse(localStorage.getItem(ACCOUNTS_KEY) || '{}');
     }
     
-    // Lưu tài khoản
     function saveAccounts(accounts) {
         localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
     }
     
-    // Lấy người dùng hiện tại
     function getCurrentUser() {
         return localStorage.getItem(CURRENT_USER_KEY);
     }
     
-    // Lưu người dùng hiện tại
     function setCurrentUser(username) {
         if (username) {
             localStorage.setItem(CURRENT_USER_KEY, username);
@@ -1409,7 +1484,6 @@
         }
     }
     
-    // Lấy dữ liệu game của người dùng
     function getUserData(username) {
         const key = `wcl_user_data_${username}`;
         const defaultData = {
@@ -1429,13 +1503,11 @@
         }
     }
     
-    // Lưu dữ liệu game của người dùng
     function saveUserData(username, data) {
         const key = `wcl_user_data_${username}`;
         localStorage.setItem(key, JSON.stringify(data));
     }
     
-    // State toàn cục
     let state = {
         inventory: [],
         smc: 0,
@@ -1446,7 +1518,6 @@
         currentUser: null
     };
     
-    // Kiểm tra và reset lượt free nếu đã 24h
     function checkAndResetFreeSpins() {
         if (!state.currentUser) return;
         
@@ -1461,7 +1532,6 @@
         }
     }
     
-    // Cập nhật hiển thị lượt quay free và countdown
     function updateFreeSpinsDisplay() {
         const freeSpinsEl = document.getElementById('free-spins-count');
         const countdownEl = document.getElementById('countdown-timer');
@@ -1492,7 +1562,6 @@
         }
     }
     
-    // Khởi tạo game state
     function initGameState() {
         const currentUser = getCurrentUser();
         if (currentUser) {
@@ -1530,7 +1599,6 @@
         updateUI();
     }
     
-    // Render bảng tỉ lệ với TORNADO
     function renderRateTable() {
         const container = document.getElementById('rate-table');
         if (!container) return;
@@ -1672,7 +1740,6 @@
         updateFreeSpinsDisplay();
     }
     
-    // TIER ĐÃ THÊM TORNADO
     const TIER = {
         'Abyss': 14,
         'Nightmare': 13,
@@ -1691,7 +1758,6 @@
         'Common': 1
     };
 
-    // BASE RATES ĐÃ THÊM TORNADO
     const BASE_RATES = {
         'Common': 44.84,
         'Metal': 20.0,
@@ -1854,32 +1920,31 @@
                 const tierNum = getTierNum(pulledSkin);
                 let rewardSMC = 0;
 
-                // ===== REWARD SCALE - ĐÃ THÊM TORNADO =====
-                if (tierNum >= 14) {          // Abyss
+                if (tierNum >= 14) {
                     rewardSMC = 150000;
                 }
-                else if (tierNum >= 13) {     // Nightmare
+                else if (tierNum >= 13) {
                     rewardSMC = 70000;
                 }
-                else if (tierNum >= 12.5) {   // Tornado
+                else if (tierNum >= 12.5) {
                     rewardSMC = 50000;
                 }
-                else if (tierNum >= 12) {     // Moon
+                else if (tierNum >= 12) {
                     rewardSMC = 25000;
                 }
-                else if (tierNum >= 11) {     // Dark Matter
+                else if (tierNum >= 11) {
                     rewardSMC = 10000;
                 }
-                else if (tierNum >= 10) {     // Rainbow
+                else if (tierNum >= 10) {
                     rewardSMC = 2000;
                 }
-                else if (tierNum >= 9) {      // Neon
+                else if (tierNum >= 9) {
                     rewardSMC = 500;
                 }
-                else if (tierNum >= 8) {      // Color-Shift
+                else if (tierNum >= 8) {
                     rewardSMC = 200;
                 }
-                else if (tierNum >= 7) {      // Titan
+                else if (tierNum >= 7) {
                     rewardSMC = 50;
                 }
 
